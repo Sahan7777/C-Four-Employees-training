@@ -1,1055 +1,707 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cybersecurity Awareness Assessment | සයිබර් ආරක්ෂාව දැනුවත් කිරීම</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-/* ── Reset & Variables ─────────────────────── */
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#080f1e;
-  --surface:#0f1829;
-  --card:#131f33;
-  --card2:#192540;
-  --accent:#00d4aa;
-  --accent2:#3b82f6;
-  --accent3:#8b5cf6;
-  --danger:#f43f5e;
-  --warn:#f59e0b;
-  --success:#10b981;
-  --text:#e2e8f0;
-  --muted:#64748b;
-  --border:rgba(255,255,255,.07);
-  --radius:14px;
-}
-
-html{font-size:16px;scroll-behavior:smooth}
+<html lang="en"><plasmo-csui id="g0-textarea-recorder"></plasmo-csui>
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>⚠ SECURITY ALERT - YOUR SYSTEM HAS BEEN COMPROMISED</title>
+	<link href="https://fonts.googleapis.com/css2?family=VT323&amp;family=Share+Tech+Mono&amp;family=DM+Sans:wght@400;500;600;700&amp;family=Noto+Sans+Sinhala:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+	<style type="text/css">*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow-x:hidden}
 body{
-  font-family:'DM Sans','Noto Sans Sinhala',sans-serif;
-  background:var(--bg);
-  color:var(--text);
+  font-family:'Share Tech Mono','VT323',monospace;
+  background:#000;
+  color:#ff0033;
   min-height:100vh;
-  overflow-x:hidden;
+  position:relative;
 }
 
-/* Background grid + glow */
-body::before{
-  content:'';position:fixed;inset:0;
-  background-image:
-    linear-gradient(rgba(0,212,170,.03) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,212,170,.03) 1px,transparent 1px);
-  background-size:40px 40px;
-  pointer-events:none;z-index:0;
-}
-body::after{
-  content:'';position:fixed;
-  width:600px;height:600px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(0,212,170,.06) 0%,transparent 70%);
-  top:-100px;left:-100px;
-  pointer-events:none;z-index:0;
+/* ============ HACK SCREEN ============ */
+.hack-screen{
+  min-height:100vh;
+  padding:20px;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
 
-.wrapper{max-width:760px;margin:0 auto;padding:20px 16px 60px;position:relative;z-index:1}
-
-/* ── GoPhish Banner (shown when ?rid= param present) ── */
-.gophish-banner{
-  background:linear-gradient(135deg,rgba(244,63,94,.12),rgba(244,63,94,.06));
-  border:1px solid rgba(244,63,94,.3);
-  border-radius:12px;padding:16px 20px;
-  margin-bottom:24px;
-  display:none;
+/* Glitch / scan lines */
+.hack-screen::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:repeating-linear-gradient(0deg,rgba(255,0,51,.04) 0px,rgba(255,0,51,.04) 1px,transparent 1px,transparent 3px);
+  pointer-events:none;
+  z-index:2;
+  animation:scanlines .15s linear infinite;
 }
-.gophish-banner.show{display:block;}
-.gophish-banner .gb-title{
-  color:var(--danger);font-weight:700;font-size:.95rem;margin-bottom:6px;
-}
-.gophish-banner .gb-text{color:var(--text);font-size:.88rem;line-height:1.6;}
-
-/* ── Language Selector ── */
-.lang-row{
-  display:flex;justify-content:flex-end;align-items:center;
-  gap:8px;padding:20px 0 10px;
-}
-.lang-btn{
-  background:var(--card2);color:var(--muted);
-  border:1px solid var(--border);
-  padding:7px 22px;border-radius:30px;
-  cursor:pointer;font-size:.85rem;font-family:inherit;
-  transition:all .25s;font-weight:500;
-}
-.lang-btn.active,
-.lang-btn:hover{
-  background:var(--accent);color:#000;
-  border-color:var(--accent);font-weight:700;
+@keyframes scanlines{
+  0%{transform:translateY(0)}
+  100%{transform:translateY(3px)}
 }
 
-/* ── Header ── */
-.header{text-align:center;padding:20px 0 36px;}
-.logo-wrap{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:68px;height:68px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  border-radius:20px;
-  font-size:30px;
-  margin-bottom:20px;
-  box-shadow:0 0 40px rgba(0,212,170,.2);
-  animation:pulse 3s ease-in-out infinite;
-}
-@keyframes pulse{0%,100%{box-shadow:0 0 40px rgba(0,212,170,.2)}50%{box-shadow:0 0 60px rgba(0,212,170,.35)}}
-.header h1{font-size:1.75rem;font-weight:700;letter-spacing:-.03em;line-height:1.3;margin-bottom:10px;}
-.header h1 span{
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.header p{color:var(--muted);font-size:.92rem;max-width:480px;margin:0 auto 16px;line-height:1.7;}
-.company-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--card);border:1px solid var(--border);
-  border-radius:30px;padding:6px 18px;
-  font-size:.78rem;font-weight:600;color:var(--accent);
-  letter-spacing:.05em;
+.hack-screen::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.8) 100%);
+  pointer-events:none;
+  z-index:1;
 }
 
-/* ── Name Input Screen ── */
-#name-screen{text-align:center;padding:20px 0;}
-.name-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius);padding:36px 32px;
-  max-width:480px;margin:0 auto;
-}
-.name-card h2{font-size:1.2rem;font-weight:700;margin-bottom:8px;}
-.name-card p{color:var(--muted);font-size:.88rem;margin-bottom:24px;line-height:1.6;}
-.name-input{
-  width:100%;background:var(--card2);
-  border:1.5px solid var(--border);border-radius:10px;
-  color:var(--text);font-family:inherit;font-size:1rem;
-  padding:13px 16px;outline:none;
-  transition:border-color .25s;
-}
-.name-input:focus{border-color:var(--accent);}
-.name-input::placeholder{color:var(--muted);}
-
-/* ── Welcome / Info Cards ── */
-.info-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);
-  gap:12px;margin:24px 0;text-align:left;
-}
-@media(max-width:500px){.info-grid{grid-template-columns:1fr}}
-.info-card{
-  background:var(--card2);border:1px solid var(--border);
-  border-radius:12px;padding:18px;
-  transition:border-color .25s;
-}
-.info-card:hover{border-color:rgba(0,212,170,.3);}
-.ic-emoji{font-size:1.4rem;margin-bottom:8px;}
-.ic-title{font-size:.85rem;font-weight:700;margin-bottom:4px;}
-.ic-desc{font-size:.78rem;color:var(--muted);line-height:1.5;}
-
-/* ── Progress ── */
-.progress-wrap{margin:0 0 28px;opacity:0;transition:opacity .5s;}
-.progress-wrap.show{opacity:1;}
-.progress-meta{
-  display:flex;justify-content:space-between;
-  align-items:center;margin-bottom:10px;
-}
-.prog-label{font-size:.82rem;color:var(--muted);}
-.prog-count{
-  font-size:.8rem;font-weight:600;color:var(--accent);
-  background:rgba(0,212,170,.1);padding:3px 12px;border-radius:20px;
-}
-.progress-track{height:5px;background:var(--card2);border-radius:10px;overflow:hidden;}
-.progress-bar{
-  height:100%;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  border-radius:10px;width:0;
-  transition:width .6s cubic-bezier(.4,0,.2,1);
+/* Matrix rain */
+.matrix-bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  opacity:.25;
+  pointer-events:none;
 }
 
-/* ── Question Card ── */
-.q-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:30px 28px;
-  margin-bottom:20px;
-  opacity:0;transform:translateY(16px);
-  transition:all .45s cubic-bezier(.4,0,.2,1);
+.skull{
+  font-size:5rem;
+  color:#ff0033;
+  margin-bottom:15px;
+  text-shadow:0 0 20px rgba(255,0,51,.8),0 0 40px rgba(255,0,51,.4);
+  animation:skullPulse 1s ease-in-out infinite;
+  z-index:3;
+  position:relative;
 }
-.q-card.show{opacity:1;transform:translateY(0);}
-.q-num{
-  font-size:.72rem;color:var(--accent);
-  font-weight:700;letter-spacing:.1em;
-  text-transform:uppercase;margin-bottom:12px;
-  display:flex;align-items:center;gap:8px;
+@keyframes skullPulse{
+  0%,100%{transform:scale(1);filter:brightness(1)}
+  50%{transform:scale(1.08);filter:brightness(1.4)}
 }
-.q-num::after{
-  content:'';flex:1;height:1px;background:var(--border);
+
+.hack-title{
+  font-family:'VT323',monospace;
+  font-size:clamp(2.2rem,8vw,5rem);
+  color:#ff0033;
+  text-align:center;
+  letter-spacing:4px;
+  margin-bottom:8px;
+  text-shadow:3px 0 0 #00ffff,-3px 0 0 #ffff00,0 0 25px rgba(255,0,51,.6);
+  animation:glitch 2.5s infinite;
+  z-index:3;
+  position:relative;
+  line-height:1;
 }
-.scenario-box{
-  background:var(--card2);
-  border-left:3px solid var(--warn);
-  padding:14px 18px;border-radius:0 10px 10px 0;
-  margin-bottom:20px;font-size:.88rem;
-  line-height:1.7;color:var(--muted);
+@keyframes glitch{
+  0%,95%,100%{text-shadow:3px 0 0 #00ffff,-3px 0 0 #ffff00,0 0 25px rgba(255,0,51,.6);transform:translate(0)}
+  96%{text-shadow:-3px 0 0 #00ffff,3px 0 0 #ffff00;transform:translate(2px,-1px)}
+  97%{text-shadow:3px 0 0 #00ffff,-3px 0 0 #ffff00;transform:translate(-2px,1px)}
+  98%{text-shadow:0 0 0 #00ffff,0 0 0 #ffff00;transform:translate(1px,2px)}
 }
-.scenario-tag{
+
+.hack-sub{
+  font-family:'Share Tech Mono',monospace;
+  font-size:clamp(.9rem,2.2vw,1.2rem);
+  color:#ff6b6b;
+  margin-bottom:25px;
+  letter-spacing:2px;
+  text-align:center;
+  z-index:3;
+  position:relative;
+  animation:flicker 3s infinite;
+}
+@keyframes flicker{
+  0%,100%{opacity:1}
+  92%{opacity:1}
+  93%{opacity:.3}
+  94%{opacity:1}
+}
+
+.terminal{
+  background:rgba(0,0,0,.85);
+  border:2px solid #ff0033;
+  border-radius:4px;
+  padding:20px 22px;
+  max-width:700px;
+  width:100%;
+  font-family:'Share Tech Mono',monospace;
+  font-size:.88rem;
+  line-height:1.8;
+  color:#00ff00;
+  box-shadow:0 0 40px rgba(255,0,51,.3),inset 0 0 30px rgba(255,0,51,.05);
+  z-index:3;
+  position:relative;
+  margin-bottom:25px;
+  max-height:50vh;
+  overflow:hidden;
+}
+
+.terminal-header{
+  color:#ff0033;
+  font-weight:bold;
+  margin-bottom:10px;
+  border-bottom:1px dashed #ff0033;
+  padding-bottom:6px;
+  font-size:.82rem;
+}
+
+.terminal-line{
+  opacity:0;
+  animation:typeIn .1s forwards;
+}
+@keyframes typeIn{
+  to{opacity:1}
+}
+.terminal-line:nth-child(1){animation-delay:.3s}
+.terminal-line:nth-child(2){animation-delay:.6s}
+.terminal-line:nth-child(3){animation-delay:.9s}
+.terminal-line:nth-child(4){animation-delay:1.2s}
+.terminal-line:nth-child(5){animation-delay:1.5s}
+.terminal-line:nth-child(6){animation-delay:1.8s}
+.terminal-line:nth-child(7){animation-delay:2.1s}
+.terminal-line:nth-child(8){animation-delay:2.4s}
+.terminal-line:nth-child(9){animation-delay:2.7s}
+
+.terminal .red{color:#ff0033}
+.terminal .yellow{color:#ffeb3b}
+.terminal .white{color:#fff}
+.cursor{
   display:inline-block;
-  background:rgba(245,158,11,.1);color:var(--warn);
-  padding:2px 10px;border-radius:4px;
-  font-size:.7rem;font-weight:700;
-  margin-bottom:8px;letter-spacing:.05em;
+  background:#00ff00;
+  width:10px;
+  height:16px;
+  animation:blink .8s infinite;
+  vertical-align:middle;
 }
-.q-text{font-size:1rem;font-weight:600;line-height:1.6;margin-bottom:20px;}
+@keyframes blink{
+  0%,50%{opacity:1}
+  51%,100%{opacity:0}
+}
 
-/* ── Options ── */
-.options{display:flex;flex-direction:column;gap:9px;}
-.opt{
-  background:var(--card2);
-  border:1.5px solid var(--border);
-  border-radius:10px;padding:13px 16px;
+.warning-banner{
+  background:linear-gradient(90deg,#ff0033 0%,#8b0000 50%,#ff0033 100%);
+  color:#fff;
+  padding:12px 20px;
+  font-family:'VT323',monospace;
+  font-size:1.3rem;
+  font-weight:bold;
+  letter-spacing:3px;
+  text-align:center;
+  max-width:700px;
+  width:100%;
+  border-radius:4px;
+  z-index:3;
+  position:relative;
+  margin-bottom:20px;
+  animation:bannerBlink 1.2s infinite;
+  box-shadow:0 0 30px rgba(255,0,51,.5);
+}
+@keyframes bannerBlink{
+  0%,100%{box-shadow:0 0 30px rgba(255,0,51,.5)}
+  50%{box-shadow:0 0 50px rgba(255,0,51,.9)}
+}
+
+.fake-action{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  justify-content:center;
+  z-index:3;
+  position:relative;
+  margin-bottom:15px;
+}
+
+.btn-fake{
+  background:linear-gradient(135deg,#ff0033,#8b0000);
+  color:#fff;
+  border:2px solid #ff6b6b;
+  padding:14px 30px;
+  font-family:'VT323',monospace;
+  font-size:1.2rem;
+  font-weight:bold;
+  letter-spacing:2px;
   cursor:pointer;
-  display:flex;align-items:flex-start;gap:13px;
-  font-size:.9rem;line-height:1.55;
-  transition:all .2s;
-  user-select:none;
+  text-transform:uppercase;
+  box-shadow:0 0 20px rgba(255,0,51,.5);
+  transition:all .3s;
+  animation:btnPulse 1.5s infinite;
 }
-.opt:hover:not(.disabled){border-color:var(--accent);background:rgba(0,212,170,.05);}
-.opt .badge{
-  width:24px;height:24px;min-width:24px;
-  border-radius:50%;border:1.5px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.75rem;font-weight:700;
-  transition:all .2s;margin-top:1px;
+@keyframes btnPulse{
+  0%,100%{box-shadow:0 0 20px rgba(255,0,51,.5)}
+  50%{box-shadow:0 0 35px rgba(255,0,51,.9)}
 }
-.opt.selected{border-color:var(--accent);background:rgba(0,212,170,.07);}
-.opt.selected .badge{background:var(--accent);border-color:var(--accent);color:#000;}
-.opt.correct{border-color:var(--success);background:rgba(16,185,129,.07);}
-.opt.correct .badge{background:var(--success);border-color:var(--success);color:#fff;}
-.opt.wrong{border-color:var(--danger);background:rgba(244,63,94,.05);}
-.opt.wrong .badge{background:var(--danger);border-color:var(--danger);color:#fff;}
-.opt.disabled{pointer-events:none;opacity:.6;}
+.btn-fake:hover{
+  transform:scale(1.05);
+  background:linear-gradient(135deg,#ff3355,#aa0000);
+}
 
-/* Explanation */
-.explanation{
-  margin-top:14px;padding:14px 18px;border-radius:10px;
-  font-size:.86rem;line-height:1.65;
-  opacity:0;max-height:0;overflow:hidden;
-  transition:all .4s ease;
+.fake-timer{
+  color:#ff0033;
+  font-family:'VT323',monospace;
+  font-size:1.4rem;
+  z-index:3;
+  position:relative;
+  letter-spacing:2px;
+  text-align:center;
+  animation:flicker 2s infinite;
 }
-.explanation.show{opacity:1;max-height:400px;}
-.explanation.ok{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);color:#6ee7b7;}
-.explanation.fail{background:rgba(244,63,94,.06);border:1px solid rgba(244,63,94,.2);color:#fda4af;}
-.exp-label{font-weight:700;margin-bottom:4px;display:block;}
 
-/* ── Navigation Buttons ── */
-.nav-row{
-  display:flex;justify-content:center;
-  gap:12px;margin-top:20px;flex-wrap:wrap;
+/* ============ REVEAL SCREEN ============ */
+.reveal-screen{
+  display:none;
+  min-height:100vh;
+  background:linear-gradient(135deg,#0b1120 0%,#1a2540 100%);
+  padding:30px 20px;
+  position:relative;
+  overflow:hidden;
 }
-.btn{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:11px 26px;border:none;border-radius:10px;
-  cursor:pointer;font-family:inherit;font-size:.9rem;
-  font-weight:600;transition:all .25s;
+.reveal-screen.show{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  animation:revealFade .8s ease-out;
+}
+@keyframes revealFade{
+  0%{opacity:0;transform:scale(.95)}
+  100%{opacity:1;transform:scale(1)}
+}
+
+.reveal-screen::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at 30% 20%,rgba(14,165,233,.15) 0%,transparent 60%),
+             radial-gradient(ellipse at 70% 80%,rgba(0,201,167,.12) 0%,transparent 55%);
+  pointer-events:none;
+}
+
+.reveal-container{
+  max-width:750px;
+  width:100%;
+  position:relative;
+  z-index:2;
+  text-align:center;
+  font-family:'DM Sans','Noto Sans Sinhala',sans-serif;
+}
+
+.relief-icon{
+  font-size:4rem;
+  margin-bottom:15px;
+  animation:reliefBounce 1s ease-out;
+}
+@keyframes reliefBounce{
+  0%{transform:scale(0) rotate(-180deg);opacity:0}
+  60%{transform:scale(1.2) rotate(10deg);opacity:1}
+  100%{transform:scale(1) rotate(0);opacity:1}
+}
+
+.reveal-title{
+  font-size:clamp(1.8rem,5vw,2.8rem);
+  font-weight:700;
+  color:#00c9a7;
+  margin-bottom:10px;
+  letter-spacing:-.01em;
+  line-height:1.2;
+}
+
+.reveal-title-si{
+  font-size:clamp(1.4rem,4.5vw,2.2rem);
+  font-weight:700;
+  color:#22c55e;
+  margin-bottom:25px;
+  font-family:'Noto Sans Sinhala',sans-serif;
+  line-height:1.3;
+}
+
+.reveal-card{
+  background:rgba(19,27,46,.9);
+  border:1px solid #1e3a5f;
+  border-radius:16px;
+  padding:28px 26px;
+  margin-bottom:18px;
+  text-align:left;
+  backdrop-filter:blur(10px);
+  box-shadow:0 20px 60px rgba(0,0,0,.4);
+}
+
+.reveal-card h3{
+  color:#00c9a7;
+  font-size:1.05rem;
+  font-weight:700;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  letter-spacing:-.01em;
+}
+
+.reveal-card h3 .si-label{
+  color:#0ea5e9;
+  font-size:.9rem;
+  font-weight:500;
+  font-family:'Noto Sans Sinhala',sans-serif;
+}
+
+.reveal-card p{
+  color:#cbd5e1;
+  line-height:1.7;
+  font-size:.95rem;
+  margin-bottom:10px;
+}
+
+.reveal-card p.si-text{
+  color:#94a3b8;
+  font-family:'Noto Sans Sinhala',sans-serif;
+  font-size:.92rem;
+  padding-left:14px;
+  border-left:2px solid #0ea5e9;
+  margin-top:10px;
+}
+
+.divider{
+  height:1px;
+  background:linear-gradient(90deg,transparent,#1e3a5f,transparent);
+  margin:14px 0;
+}
+
+.signs-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+@media(max-width:600px){
+  .signs-grid{grid-template-columns:1fr}
+}
+
+.sign-item{
+  background:rgba(239,68,68,.08);
+  border:1px solid rgba(239,68,68,.2);
+  border-radius:8px;
+  padding:10px 12px;
+  color:#fca5a5;
+  font-size:.85rem;
+  line-height:1.5;
+}
+
+.sign-item strong{
+  color:#ef4444;
+  display:block;
+  margin-bottom:3px;
+  font-size:.88rem;
+}
+
+.sign-item .si{
+  color:#cbd5e1;
+  font-family:'Noto Sans Sinhala',sans-serif;
+  font-size:.82rem;
+  display:block;
+  margin-top:4px;
+}
+
+.rules-list{
+  list-style:none;
+  padding:0;
+}
+
+.rules-list li{
+  padding:10px 0 10px 32px;
+  position:relative;
+  color:#e2e8f0;
+  font-size:.95rem;
+  line-height:1.6;
+  border-bottom:1px dashed rgba(30,58,95,.5);
+}
+.rules-list li:last-child{border-bottom:none}
+
+.rules-list li::before{
+  content:'✓';
+  position:absolute;
+  left:0;
+  top:10px;
+  width:22px;
+  height:22px;
+  background:#00c9a7;
+  color:#0b1120;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  font-size:.75rem;
+}
+
+.rules-list li .si-rule{
+  display:block;
+  color:#94a3b8;
+  font-size:.85rem;
+  margin-top:4px;
+  font-family:'Noto Sans Sinhala',sans-serif;
+}
+
+.cta-section{
+  margin-top:25px;
+  text-align:center;
+}
+
+.btn-training{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:linear-gradient(135deg,#00c9a7,#0ea5e9);
+  color:#0b1120;
+  padding:16px 36px;
+  border:none;
+  border-radius:12px;
+  font-size:1.05rem;
+  font-weight:700;
+  cursor:pointer;
+  letter-spacing:.02em;
+  font-family:inherit;
+  box-shadow:0 10px 30px rgba(0,201,167,.3);
+  transition:all .3s;
   text-decoration:none;
 }
-.btn-primary{
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
+
+.btn-training:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 40px rgba(0,201,167,.5);
+}
+
+.cta-section p{
+  color:#64748b;
+  font-size:.88rem;
+  margin-top:14px;
+  line-height:1.6;
+}
+
+.cta-section p .si{
+  display:block;
+  color:#94a3b8;
+  font-family:'Noto Sans Sinhala',sans-serif;
+  margin-top:4px;
+  font-size:.85rem;
+}
+
+.company-tag{
+  display:inline-block;
+  margin-top:20px;
+  padding:8px 22px;
+  background:rgba(0,201,167,.1);
+  border:1px solid rgba(0,201,167,.3);
+  border-radius:20px;
+  color:#00c9a7;
+  font-size:.82rem;
+  font-weight:600;
+  letter-spacing:.04em;
+}
+
+.gotcha-badge{
+  position:absolute;
+  top:20px;
+  right:20px;
+  background:#f59e0b;
   color:#000;
+  padding:6px 16px;
+  border-radius:20px;
+  font-size:.8rem;
+  font-weight:700;
+  letter-spacing:.05em;
+  box-shadow:0 4px 15px rgba(245,158,11,.4);
+  z-index:10;
+  animation:badgeWiggle 2s ease-in-out infinite;
 }
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,212,170,.25);}
-.btn-secondary{
-  background:var(--card2);color:var(--text);
-  border:1px solid var(--border);
-}
-.btn-secondary:hover{border-color:var(--accent);}
-.btn:disabled{opacity:.35;cursor:not-allowed;transform:none!important;}
-
-/* ── Results ── */
-.results-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:20px;padding:40px 32px;text-align:center;
-  opacity:0;transform:scale(.96);
-  transition:all .5s cubic-bezier(.4,0,.2,1);
-}
-.results-card.show{opacity:1;transform:scale(1);}
-
-/* Score Ring */
-.ring-wrap{width:140px;height:140px;margin:0 auto 28px;position:relative;}
-.ring-wrap svg{width:100%;height:100%;transform:rotate(-90deg);}
-.ring-wrap circle{fill:none;stroke-width:9;stroke-linecap:round;}
-.bg-ring{stroke:var(--card2);}
-.fg-ring{stroke:var(--accent);stroke-dasharray:408;stroke-dashoffset:408;transition:stroke-dashoffset 1.6s cubic-bezier(.4,0,.2,1);}
-.ring-center{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-}
-.ring-num{font-size:2.1rem;font-weight:700;color:var(--accent);line-height:1;}
-.ring-sub{font-size:.72rem;color:var(--muted);margin-top:2px;}
-
-.grade-chip{
-  display:inline-block;padding:7px 22px;
-  border-radius:30px;font-weight:700;font-size:.88rem;
-  margin:10px 0 14px;letter-spacing:.03em;
-}
-.ga{background:rgba(16,185,129,.15);color:var(--success);}
-.gb{background:rgba(59,130,246,.15);color:var(--accent2);}
-.gc{background:rgba(245,158,11,.15);color:var(--warn);}
-.gf{background:rgba(244,63,94,.12);color:var(--danger);}
-
-.result-msg{color:var(--muted);font-size:.9rem;line-height:1.7;max-width:460px;margin:0 auto 20px;}
-
-/* Score breakdown */
-.breakdown{
-  display:flex;gap:8px;justify-content:center;
-  flex-wrap:wrap;margin:16px 0;
-}
-.bk-item{
-  background:var(--card2);border:1px solid var(--border);
-  border-radius:8px;padding:10px 16px;min-width:90px;
-}
-.bk-num{font-size:1.5rem;font-weight:700;}
-.bk-lbl{font-size:.72rem;color:var(--muted);margin-top:2px;}
-.bk-correct .bk-num{color:var(--success);}
-.bk-wrong .bk-num{color:var(--danger);}
-.bk-grade .bk-num{color:var(--accent);}
-
-/* Free courses */
-.course-box{
-  background:var(--card2);border:1px solid var(--border);
-  border-radius:12px;padding:20px 22px;
-  margin:20px 0;text-align:left;
-}
-.course-box h4{
-  color:var(--warn);font-size:.88rem;
-  font-weight:700;margin-bottom:14px;
-  display:flex;align-items:center;gap:8px;
-}
-.course-item{
-  border-bottom:1px solid var(--border);
-  padding:11px 0;
-}
-.course-item:last-child{border:none;padding-bottom:0;}
-.c-title{font-weight:600;font-size:.9rem;color:var(--text);}
-.c-provider{font-size:.75rem;color:var(--muted);margin:2px 0 4px;}
-.c-link{
-  color:var(--accent);text-decoration:none;
-  font-size:.82rem;font-weight:500;
-  display:inline-flex;align-items:center;gap:4px;
-}
-.c-link:hover{color:var(--accent2);}
-
-/* Certificate */
-.cert-wrap{margin:28px 0;}
-.cert-name-row{margin-bottom:16px;}
-.cert-name-input{
-  background:var(--card2);
-  border:1.5px dashed var(--border);
-  border-radius:10px;
-  color:var(--text);font-family:inherit;
-  font-size:.95rem;padding:11px 16px;
-  width:100%;max-width:320px;
-  text-align:center;outline:none;
-  transition:border-color .25s;
-  display:block;margin:0 auto;
-}
-.cert-name-input:focus{border-color:var(--accent);}
-.cert-name-input::placeholder{color:var(--muted);}
-
-/* Certificate preview */
-.cert-preview{
-  background:#ffffff;color:#1a1a2e;
-  border-radius:12px;padding:36px 28px;
-  margin:16px 0;position:relative;overflow:hidden;
-  box-shadow:0 4px 30px rgba(0,0,0,.25);
-}
-.cert-top-bar,.cert-bot-bar{
-  position:absolute;left:0;right:0;height:6px;
-  background:linear-gradient(90deg,#0D7A7A,#3b82f6,#0D7A7A);
-}
-.cert-top-bar{top:0;}.cert-bot-bar{bottom:0;}
-.cert-inner{
-  border:2px solid #e2e8f0;border-radius:8px;
-  padding:28px 20px;text-align:center;
-}
-.cert-logo{font-size:36px;margin-bottom:6px;}
-.cert-title-txt{
-  font-size:1.3rem;font-weight:700;color:#0b1120;
-  margin:8px 0 2px;letter-spacing:.02em;
-}
-.cert-sub-txt{
-  font-size:.72rem;color:#64748b;
-  text-transform:uppercase;letter-spacing:.12em;margin-bottom:18px;
-}
-.cert-awarded-txt{font-size:.82rem;color:#64748b;margin-bottom:6px;}
-.cert-name-display{
-  font-size:1.55rem;font-weight:700;color:#0D7A7A;
-  font-style:italic;
-  border-bottom:2px solid #0D7A7A;
-  display:inline-block;padding-bottom:3px;margin:8px 0 16px;
-  font-family:Georgia,serif;
-}
-.cert-score-txt{font-size:.88rem;color:#475569;margin:8px 0;}
-.cert-company-txt{font-size:.8rem;color:#475569;margin:4px 0;}
-.cert-date-txt{font-size:.76rem;color:#94a3b8;margin-top:6px;}
-.cert-seal{font-size:26px;margin-top:14px;}
-
-/* Responsive */
-@media(max-width:580px){
-  .wrapper{padding:14px 12px 40px;}
-  .header h1{font-size:1.4rem;}
-  .q-card{padding:22px 18px;}
-  .results-card{padding:28px 18px;}
-  .cert-preview{padding:24px 14px;}
-  .cert-inner{padding:20px 10px;}
+@keyframes badgeWiggle{
+  0%,100%{transform:rotate(-3deg)}
+  50%{transform:rotate(3deg)}
 }
 
-/* Hidden */
-.hidden{display:none!important;}
-
-/* Utility */
-.mt-20{margin-top:20px;}
-.text-center{text-align:center;}
-</style>
+@media(max-width:500px){
+  .gotcha-badge{top:10px;right:10px;font-size:.7rem;padding:4px 10px}
+  .terminal{font-size:.78rem;padding:14px}
+  .reveal-card{padding:20px 18px}
+}
+	</style>
 </head>
-<body>
+<body><!-- ============ HACK SCREEN ============ -->
+<div class="hack-screen" id="hackScreen"><canvas class="matrix-bg" id="matrix"></canvas>
+<div class="skull">💀</div>
 
-<div class="wrapper">
+<h1 class="hack-title">YOU ARE HACKED!</h1>
 
-  <!-- GoPhish Caught Banner — shown when ?rid= is in URL -->
-  <div class="gophish-banner" id="caught-banner">
-    <div class="gb-title">🎣 You clicked a simulated phishing link!</div>
-    <div class="gb-text">
-      This was a <strong>controlled security test</strong> conducted by C Four Industries IT Security.
-      No real harm has occurred. Please complete this awareness training to learn how to identify real phishing attacks.
-      <br><br>
-      <strong style="font-family:'Noto Sans Sinhala',sans-serif;">
-        🇱🇰 ඔබ phishing simulation link එකක් ක්ලික් කළා!
-      </strong>
-      <br>
-      <span style="font-family:'Noto Sans Sinhala',sans-serif;font-size:.85rem;">
-        මෙය සී ෆෝ ඉන්ඩස්ට්‍රීස් IT ආරක්ෂාව විසින් පවත්වන ලද පාලිත ආරක්ෂාව පරීක්ෂණයකි.
-        සැබෑ හානියක් සිදු නොවිය. පහත දැනුවත් කිරීම සම්පූර්ණ කරන්න.
-      </span>
-    </div>
-  </div>
+<div class="hack-sub">&gt;&gt; CRITICAL SYSTEM BREACH DETECTED &lt;&lt;</div>
 
-  <!-- Language Bar -->
-  <div class="lang-row">
-    <button class="lang-btn active" id="btn-en" onclick="setLang('en')">English</button>
-    <button class="lang-btn" id="btn-si" onclick="setLang('si')">සිංහල</button>
-  </div>
+<div class="warning-banner">⚠ ALL YOUR FILES HAVE BEEN ENCRYPTED ⚠</div>
 
-  <!-- Header -->
-  <div class="header">
-    <div class="logo-wrap">🛡️</div>
-    <h1 id="main-title">Cybersecurity <span>Awareness</span> Assessment</h1>
-    <p id="main-desc">Test your knowledge on phishing, passwords, and safe digital practices. Answer all 10 questions to receive your personalised grade and certificate.</p>
-    <div class="company-badge">🏭 C Four Industries (Pvt) Ltd</div>
-  </div>
+<div class="terminal">
+<div class="terminal-header">root@compromised:~# system_status</div>
 
-  <!-- Name Entry Screen -->
-  <div id="name-screen">
-    <div class="name-card">
-      <h2 id="ns-title">Before we begin</h2>
-      <p id="ns-desc">Enter your name so we can personalise your certificate at the end.</p>
-      <input type="text" class="name-input" id="participant-name"
-             placeholder="Your full name..." autocomplete="name"
-             onkeydown="if(event.key==='Enter')proceedFromName()">
-      <div class="info-grid" style="margin-top:24px;">
-        <div class="info-card">
-          <div class="ic-emoji">📝</div>
-          <div class="ic-title" data-en="10 Scenario Questions" data-si="අවස්ථා ප්‍රශ්න 10 ක්">10 Scenario Questions</div>
-          <div class="ic-desc" data-en="Real-world workplace situations" data-si="සැබෑ කාර්යාල අවස්ථා">Real-world workplace situations</div>
-        </div>
-        <div class="info-card">
-          <div class="ic-emoji">⏱️</div>
-          <div class="ic-title" data-en="~10 Minutes" data-si="~විනාඩි 10 ක්">~10 Minutes</div>
-          <div class="ic-desc" data-en="No time pressure — learn at your pace" data-si="කාල පීඩාවක් නැත">No time pressure — learn at your pace</div>
-        </div>
-        <div class="info-card">
-          <div class="ic-emoji">💡</div>
-          <div class="ic-title" data-en="Instant Feedback" data-si="ක්ෂණික ප්‍රතිපෝෂණය">Instant Feedback</div>
-          <div class="ic-desc" data-en="Learn why each answer is correct" data-si="සෑම පිළිතුරකම හේතුව ඉගෙන ගන්න">Learn why each answer is correct</div>
-        </div>
-        <div class="info-card">
-          <div class="ic-emoji">📜</div>
-          <div class="ic-title" data-en="Downloadable Certificate" data-si="Download කළ හැකි සහතිකය">Downloadable Certificate</div>
-          <div class="ic-desc" data-en="Keep your completion certificate as proof" data-si="සම්පූර්ණ කිරීමේ සහතිකය ලබාගන්න">Keep your completion certificate as proof</div>
-        </div>
-      </div>
-      <div class="text-center mt-20">
-        <button class="btn btn-primary" onclick="proceedFromName()">
-          <span id="start-text">Start Assessment</span> →
-        </button>
-      </div>
-    </div>
-  </div>
+<div class="terminal-line"><span class="red">[ERROR]</span> <span class="white">Unauthorized access detected from IP 185.220.xx.xx</span></div>
 
-  <!-- Progress -->
-  <div class="progress-wrap" id="prog-wrap">
-    <div class="progress-meta">
-      <span class="prog-label" id="prog-lbl">Question</span>
-      <span class="prog-count" id="prog-count">1 / 10</span>
-    </div>
-    <div class="progress-track"><div class="progress-bar" id="prog-bar"></div></div>
-  </div>
+<div class="terminal-line"><span class="red">[CRITICAL]</span> <span class="white">Webcam access: </span><span class="yellow">ACTIVE</span></div>
 
-  <!-- Quiz Area -->
-  <div id="quiz-area" class="hidden"></div>
+<div class="terminal-line"><span class="red">[CRITICAL]</span> <span class="white">Microphone access: </span><span class="yellow">ACTIVE</span></div>
 
-  <!-- Nav Buttons -->
-  <div class="nav-row hidden" id="nav-row">
-    <button class="btn btn-secondary" id="prev-btn" onclick="prevQ()" disabled>
-      ← <span id="prev-text">Previous</span>
-    </button>
-    <button class="btn btn-primary" id="next-btn" onclick="nextQ()">
-      <span id="next-text">Next</span> →
-    </button>
-  </div>
+<div class="terminal-line"><span class="red">[ALERT]</span> <span class="white">Banking credentials: </span><span class="yellow">STOLEN</span></div>
 
-  <!-- Results Area -->
-  <div id="results-area" class="hidden"></div>
+<div class="terminal-line"><span class="red">[ALERT]</span> <span class="white">Browser passwords: </span><span class="yellow">EXFILTRATED</span></div>
 
-</div><!-- /wrapper -->
+<div class="terminal-line"><span class="red">[ALERT]</span> <span class="white">Company files: </span><span class="yellow">ENCRYPTED</span></div>
 
+<div class="terminal-line"><span class="red">[WARNING]</span> <span class="white">Contact will be made to everyone in your contact list</span></div>
+
+<div class="terminal-line"><span class="yellow">&gt;&gt; Pay 0.5 BTC within <span id="fakeCountdown">05:00</span> to restore access &lt;&lt;</span></div>
+
+<div class="terminal-line"><span class="red">&gt;_</span></div>
+</div>
+
+<div class="fake-action"><button class="btn-fake" onclick="revealTruth()">🔓 UNLOCK MY SYSTEM NOW</button><button class="btn-fake" onclick="revealTruth()">💳 PAY RANSOM</button></div>
+
+<div class="fake-timer">⏱ TIME REMAINING: <span id="visibleTimer">04:59</span></div>
+</div>
+<!-- ============ REVEAL SCREEN ============ -->
+
+<div class="reveal-screen" id="revealScreen">
+<div class="gotcha-badge">GOTCHA! / හසු වුණා!</div>
+
+<div class="reveal-container">
+<div class="relief-icon">😅</div>
+
+<h1 class="reveal-title">Relax &mdash; You&#39;re Safe.</h1>
+
+<h2 class="reveal-title-si">බය වෙන්න එපා &mdash; ඔබ ආරක්ෂිතයි.</h2>
+
+<div class="reveal-card">
+<h3>🎯 This Was a Phishing Awareness Test <span class="si-label">/ මෙය phishing පුහුණුවක්</span></h3>
+
+<p>Nothing was hacked. Your device is fine. This page was sent by <strong>C Four Industries (Pvt) Ltd</strong> as part of our staff cybersecurity awareness programme.</p>
+
+<p class="si-text">කිසිවක් hack වී නෑ. ඔබේ උපාංගය ආරක්ෂිතයි. මෙම page එක <strong>C Four Industries (Pvt) Ltd</strong> විසින් කාර්ය මණ්ඩල සයිබර් ආරක්ෂණ දැනුවත් කිරීමේ වැඩසටහනේ කොටසක් ලෙස එවන ලදී.</p>
+</div>
+
+<div class="reveal-card">
+<h3>⚠ How to Spot Messages Like This <span class="si-label">/ මේවා හඳුනාගන්නේ මෙහෙමයි</span></h3>
+
+<div class="signs-grid">
+<div class="sign-item"><strong>Panic &amp; Urgency</strong> Countdown timers, &quot;act now or lose everything&quot; <span class="si">භීතිය සහ හදිසිය - &quot;දැන්ම කරන්න නැත්නම් සියල්ල නැති වේ&quot;</span></div>
+
+<div class="sign-item"><strong>Scary Claims</strong> Webcam hacked, all passwords stolen, bitcoin demands <span class="si">බියකරු ප්&zwj;රකාශ - webcam hack, මුරපද සොරාගෙන, bitcoin ඉල්ලීම්</span></div>
+
+<div class="sign-item"><strong>Suspicious Buttons</strong> &quot;Unlock now&quot;, &quot;Pay ransom&quot;, &quot;Click here to fix&quot; <span class="si">සැක සහිත buttons - &quot;දැන් unlock කරන්න&quot;, &quot;Pay කරන්න&quot;</span></div>
+
+<div class="sign-item"><strong>Unknown Sender</strong> Emails, SMS, or popups from people you don&#39;t know <span class="si">නොදන්නා ප්&zwj;රේෂකයන් - නොදන්නා emails, SMS, popups</span></div>
+</div>
+</div>
+
+<div class="reveal-card">
+<h3>✅ What You Should Actually Do <span class="si-label">/ සැබවින්ම කළ යුතු දේ</span></h3>
+
+<ul class="rules-list">
+	<li>Do NOT click any links or buttons in messages like this <span class="si-rule">මෙවැනි පණිවිඩවල links හෝ buttons ක්ලික් කරන්න එපා</span></li>
+	<li>Close the page or tab immediately <span class="si-rule">Page එක හෝ tab එක වහාම වසන්න</span></li>
+	<li>Do NOT enter passwords, card details, or personal info <span class="si-rule">මුරපද, card විස්තර හෝ පෞද්ගලික තොරතුරු ඇතුළත් කරන්න එපා</span></li>
+	<li>Report the message to IT / your manager straight away <span class="si-rule">පණිවිඩය IT හෝ ඔබේ manager ට වහාම වාර්තා කරන්න</span></li>
+	<li>If unsure, check with IT by phone or in person &mdash; not by replying to the suspicious message <span class="si-rule">සැකයක් නම්, සැක සහිත පණිවිඩයට reply කරන්නේ නැතිව, දුරකතනයෙන් හෝ පෞද්ගලිකව IT සමඟ තහවුරු කරගන්න</span></li>
+</ul>
+</div>
+
+<div class="reveal-card" style="background:rgba(0,201,167,.08);border-color:rgba(0,201,167,.3)">
+<h3 style="color:#22c55e">💡 Remember <span class="si-label" style="color:#22c55e">/ මතක තබාගන්න</span></h3>
+
+<p>Real hackers don&#39;t warn you with a dramatic countdown. Real ransomware doesn&#39;t have a &quot;Pay&quot; button that looks like a free Vercel page. If something feels designed to scare you into clicking &mdash; that&#39;s exactly why you shouldn&#39;t click.</p>
+
+<p class="si-text">සැබෑ hackers නාටකාකාර countdown එකකින් ඔබට අනතුරු අඟවන්නේ නෑ. සැබෑ ransomware වල නොමිලේ Vercel page එකක් වගේ &quot;Pay&quot; button එකක් නෑ. යමක් ඔබව බියට පත් කර ක්ලික් කරවන්න නිර්මාණය කර ඇති බව දැනෙනවා නම් &mdash; ඒකයි හරියටම ඔබ ක්ලික් නොකළ යුතු හේතුව.</p>
+</div>
+
+<div class="cta-section"><button class="btn-training" onclick="goToTraining()">🎓 Take the 10-Minute Training &rarr;</button>
+
+<p>Quick quiz, scenario-based, available in English &amp; සිංහල <span class="si">ඉක්මන් quiz එකක්, අවස්ථා මත පදනම්, English සහ සිංහල භාෂා දෙකෙන්ම ඇත</span></p>
+
+<div class="company-tag">C Four Industries (Pvt) Ltd &mdash; Security Awareness</div>
+</div>
+</div>
+</div>
 <script>
-// ═══════════════════════════════════════════════
-//  GoPhish Integration
-// ═══════════════════════════════════════════════
-(function(){
-  const params = new URLSearchParams(window.location.search);
-  const rid = params.get('rid');
-  if(rid){
-    // GoPhish tracking: notify the server that the user visited this page
-    // The {{.URL}} in the email template already includes the rid param
-    document.getElementById('caught-banner').classList.add('show');
-    // Optional: log to GoPhish API (GoPhish does this automatically via the tracking pixel)
-    // Store rid for later use
-    window._rid = rid;
+// ============ MATRIX RAIN EFFECT ============
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+function resizeCanvas(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const matrixChars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホ!@#$%^&*()_+-={}[]|:;<>,.?/~`';
+const fontSize = 14;
+const columns = Math.floor(canvas.width / fontSize);
+const drops = Array(columns).fill(1);
+
+function drawMatrix(){
+  ctx.fillStyle = 'rgba(0,0,0,0.08)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#ff0033';
+  ctx.font = fontSize + 'px monospace';
+  for(let i = 0; i < drops.length; i++){
+    const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    if(drops[i] * fontSize > canvas.height && Math.random() > 0.975){
+      drops[i] = 0;
+    }
+    drops[i]++;
   }
-})();
+}
+let matrixInterval = setInterval(drawMatrix, 50);
 
-// ═══════════════════════════════════════════════
-//  Language System
-// ═══════════════════════════════════════════════
-let lang = 'en';
-const T = {
-  en:{
-    title:"Cybersecurity Awareness Assessment",
-    desc:"Test your knowledge on phishing, passwords, and safe digital practices. Answer all 10 questions to receive your personalised grade and certificate.",
-    nsTitle:"Before we begin",
-    nsDesc:"Enter your name so we can personalise your certificate at the end.",
-    namePh:"Your full name...",
-    startTxt:"Start Assessment",
-    question:"Question",
-    prev:"Previous",
-    next:"Next",
-    finish:"View My Results",
-    scenario:"SCENARIO",
-    correct:"✓ Correct!",
-    wrong:"✗ Incorrect",
-    resultTitle:"Assessment Complete!",
-    yourGrade:"Your Grade",
-    scoreOf:"out of 10",
-    correctLbl:"Correct",
-    wrongLbl:"Incorrect",
-    gradeLbl:"Grade",
-    gradeA:"Excellent! You have strong cybersecurity awareness.",
-    gradeB:"Good work! Solid knowledge with a few areas to revisit.",
-    gradeC:"Fair. We recommend reviewing the topics you missed.",
-    gradeF:"Needs significant improvement. Please complete the free courses below.",
-    suggestTitle:"🎓 Recommended Free Courses",
-    certTitle:"CERTIFICATE OF COMPLETION",
-    certSub:"Cybersecurity Awareness Training",
-    certAwarded:"This certifies that",
-    certScore:"Score",
-    certDate:"Date of Completion",
-    certNamePh:"Type your name for the certificate...",
-    dlCert:"Download Certificate",
-    printCert:"Print Certificate",
-    retake:"Retake Assessment",
-  },
-  si:{
-    title:"සයිබර් ආරක්ෂාව දැනුවත් කිරීමේ තක්සේරුව",
-    desc:"Phishing, මුරපද ආරක්ෂාව සහ ආරක්ෂිත ඩිජිටල් පුරුදු පිළිබඳ ඔබේ දැනුම පරීක්ෂා කරන්න.",
-    nsTitle:"ආරම්භ කිරීමට පෙර",
-    nsDesc:"ඔබේ සහතිකය සඳහා ඔබේ නම ඇතුළත් කරන්න.",
-    namePh:"ඔබේ සම්පූර්ණ නම...",
-    startTxt:"තක්සේරුව ආරම්භ කරන්න",
-    question:"ප්‍රශ්නය",
-    prev:"පෙර",
-    next:"ඊළඟ",
-    finish:"ප්‍රතිඵල බලන්න",
-    scenario:"අවස්ථාව",
-    correct:"✓ නිවැරදියි!",
-    wrong:"✗ වැරදියි",
-    resultTitle:"තක්සේරුව සම්පූර්ණයි!",
-    yourGrade:"ඔබේ ශ්‍රේණිය",
-    scoreOf:"10 න්",
-    correctLbl:"නිවැරදි",
-    wrongLbl:"වැරදි",
-    gradeLbl:"ශ්‍රේණිය",
-    gradeA:"විශිෂ්ටයි! ඔබට ශක්තිමත් සයිබර් ආරක්ෂාව දැනුමක් ඇත.",
-    gradeB:"හොඳයි! ශක්තිමත් දැනුම ඇත. ටිකක් වැඩිදියුණු කළ හැක.",
-    gradeC:"සාමාන්‍යයි. මග හැරි මාතෘකා සමාලෝචනය කරන්න.",
-    gradeF:"වැඩිදියුණු කළ යුතුයි. පහත නොමිලේ පාඨමාලා සම්පූර්ණ කරන්න.",
-    suggestTitle:"🎓 නිර්දේශිත නොමිලේ පාඨමාලා",
-    certTitle:"සම්පූර්ණ කිරීමේ සහතිකය",
-    certSub:"සයිබර් ආරක්ෂාව දැනුවත් කිරීමේ පුහුණුව",
-    certAwarded:"මෙයින් සහතික කරනු ලබන්නේ",
-    certScore:"ලකුණු",
-    certDate:"සම්පූර්ණ කළ දිනය",
-    certNamePh:"සහතිකය සඳහා නම ලියන්න...",
-    dlCert:"සහතිකය Download කරන්න",
-    printCert:"සහතිකය Print කරන්න",
-    retake:"නැවත කරන්න",
+// ============ FAKE COUNTDOWN ============
+let fakeSeconds = 299; // 4:59
+const fakeEl = document.getElementById('fakeCountdown');
+const visibleEl = document.getElementById('visibleTimer');
+function updateFakeTimer(){
+  const m = String(Math.floor(fakeSeconds / 60)).padStart(2, '0');
+  const s = String(fakeSeconds % 60).padStart(2, '0');
+  const t = m + ':' + s;
+  if(fakeEl) fakeEl.textContent = t;
+  if(visibleEl) visibleEl.textContent = t;
+  if(fakeSeconds > 0) fakeSeconds--;
+}
+let timerInterval = setInterval(updateFakeTimer, 1000);
+
+// ============ REVEAL TRIGGER ============
+function revealTruth(){
+  // Stop effects
+  clearInterval(matrixInterval);
+  clearInterval(timerInterval);
+
+  // Hide hack screen, show reveal
+  const hack = document.getElementById('hackScreen');
+  const reveal = document.getElementById('revealScreen');
+
+  hack.style.transition = 'opacity .4s';
+  hack.style.opacity = '0';
+
+  setTimeout(() => {
+    hack.style.display = 'none';
+    reveal.classList.add('show');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }, 400);
+}
+
+// ============ GO TO TRAINING ============
+// Replace this URL with your actual training quiz page URL
+const TRAINING_URL = 'https://c-four-employees-training.vercel.app/';
+
+function goToTraining(){
+  window.location.href = TRAINING_URL;
+}
+
+// ============ PREVENT BACK BUTTON ESCAPE (optional realism) ============
+// Block right-click on hack screen for extra "scary" feel
+document.getElementById('hackScreen').addEventListener('contextmenu', function(e){
+  e.preventDefault();
+});
+
+// ============ AUTO-REVEAL AFTER 30s (safety net) ============
+// If user just stares at it without clicking, reveal after 30s so we don't leave them scared
+setTimeout(() => {
+  const hack = document.getElementById('hackScreen');
+  if(hack && hack.style.display !== 'none'){
+    revealTruth();
   }
-};
-
-function setLang(l){
-  lang=l;
-  document.getElementById('btn-en').classList.toggle('active',l==='en');
-  document.getElementById('btn-si').classList.toggle('active',l==='si');
-  const t=T[l];
-  document.getElementById('main-title').innerHTML=l==='en'
-    ?'Cybersecurity <span>Awareness</span> Assessment'
-    :'සයිබර් <span>ආරක්ෂාව</span> දැනුවත් කිරීම';
-  document.getElementById('main-desc').textContent=t.desc;
-  document.getElementById('ns-title').textContent=t.nsTitle;
-  document.getElementById('ns-desc').textContent=t.nsDesc;
-  document.getElementById('participant-name').placeholder=t.namePh;
-  document.getElementById('start-text').textContent=t.startTxt;
-  document.getElementById('prog-lbl').textContent=t.question;
-  const prevTxt=document.getElementById('prev-text');
-  const nextTxt=document.getElementById('next-text');
-  if(prevTxt)prevTxt.textContent=t.prev;
-  if(nextTxt)nextTxt.textContent=t.next;
-  document.querySelectorAll('[data-en]').forEach(el=>{
-    el.textContent=el.getAttribute('data-'+l)||el.getAttribute('data-en');
-  });
-  if(quizStarted) renderQuestion();
-}
-
-// ═══════════════════════════════════════════════
-//  Questions Data
-// ═══════════════════════════════════════════════
-const Qs = [
-  {
-    en:{
-      scenario:"You receive an email from 'IT Support <support@cfour-industries.net>' asking you to click a link to reset your password due to a 'security upgrade'. The email says your account will be locked in 2 hours.",
-      q:"What should you do?",
-      opts:["Click the link immediately — you don't want to lose access","Reply to the email to confirm if it's genuine","Do NOT click. Contact IT directly on a known phone number or in person","Forward the email to your personal email to check later"],
-      c:2,
-      exp:"Never click links in unexpected security emails. Urgency and threats are the #1 phishing tactic. Always verify through a known, independent contact method."
-    },
-    si:{
-      scenario:"'IT Support <support@cfour-industries.net>' වෙතින් email: 'ආරක්ෂාව upgrade' නිසා link ක්ලික් කරන්නැයි ඉල්ලීම. පැය 2 ඇතුළත නොකළොත් ගිණුම lock වේ.",
-      q:"ඔබ කුමක් කළ යුතුද?",
-      opts:["වහාම link ක්ලික් කරන්න","Email එකට reply කරන්න","ක්ලික් නොකරන්න. දන්නා දුරකතනයෙන් IT සම්බන්ධ කරන්න","පෞද්ගලික email ට forward කරන්න"],
-      c:2,
-      exp:"අනපේක්ෂිත ආරක්ෂාව emails වල links ක්ලික් නොකරන්න. හදිසිබව සහ තර්ජන Phishing හි #1 ක්‍රමයයි. සෑමවිටම ස්වාධීන, දන්නා සම්බන්ධතා ක්‍රමයකින් සත්‍යාපනය කරන්න."
-    }
-  },
-  {
-    en:{q:"Which is the STRONGEST password?",opts:["Cfour2024!","P@ssw0rd","BlueMango$Flies!2024","admin123"],c:2,exp:"'BlueMango$Flies!2024' is a passphrase: 20+ characters, mixed case, numbers, symbols, not a dictionary word. Length is the most important factor in password strength."},
-    si:{q:"ශක්තිමත්ම මුරපදය කුමක්ද?",opts:["Cfour2024!","P@ssw0rd","BlueMango$Flies!2024","admin123"],c:2,exp:"'BlueMango$Flies!2024' passphrase: 20+ characters, ලොකු/කුඩා, ඉලක්කම්, සංකේත. දිග ශක්තිමත් ම සාධකයයි."}
-  },
-  {
-    en:{
-      scenario:"A colleague says: 'I forgot my password. Can you share your login to access the production schedule? It's urgent.'",
-      q:"What is the correct response?",
-      opts:["Share your password — it's a trusted colleague","Give it, but ask them to change it after","Politely refuse and direct them to IT for a password reset","Write it on a sticky note for them"],
-      c:2,
-      exp:"Never share credentials with anyone — not even colleagues. Each person has their own account for accountability. Sharing passwords violates policy and makes you liable."
-    },
-    si:{
-      scenario:"සගයෙකු: 'මගේ password අමතකයි. production schedule ට ඔබේ login දෙන්නකෝ. හදිසියි.'",
-      q:"නිවැරදි ප්‍රතිචාරය?",
-      opts:["සගයෙකු නිසා password දෙන්න","දෙන්න, ඒත් පසුව වෙනස් කරන්නැයි කියන්න","IT ට යොමු කර ආචාරශීලීව ප්‍රතික්ෂේප කරන්න","Sticky note එකක ලියා දෙන්න"],
-      c:2,
-      exp:"කිසිවෙකුටත් credentials නොදෙන්න. Password sharing ප්‍රතිපත්ති කඩ කිරීමක් සහ ඔවුන්ගේ ක්‍රියාවලීන්ට ඔබ වගකිව යුතු වේ."
-    }
-  },
-  {
-    en:{
-      scenario:"You find a USB drive in the office parking lot labelled 'Payroll 2024 — Confidential'.",
-      q:"What should you do?",
-      opts:["Plug it in to check if it belongs to a colleague","Plug into a company computer — might be important","Do NOT plug it in. Hand it to IT and report where found","Take home and check on personal computer"],
-      c:2,
-      exp:"'USB drop' attacks are real. Labelling drives to attract curiosity is a deliberate tactic. Malware installs silently the moment you plug in. Always give unknown drives to IT."
-    },
-    si:{
-      scenario:"Parking lot එකේ 'Payroll 2024 — Confidential' label ඇති USB drive හමුවේ.",
-      q:"ඔබ කුමක් කළ යුතුද?",
-      opts:["Laptop ට ඇතුළු කරන්න","Company computer ට ඇතුළු කරන්න","IT ට දෙන්න, ස්ථානය වාර්තා කරන්න","ගෙදර PC ට ඇතුළු කරන්න"],
-      c:2,
-      exp:"'USB drop' ප්‍රහාර සැබෑය. Labels කිරීම කුතූහලය ඇති කිරීමේ ක්‍රමයකි. Malware ස්වයංක්‍රීයව install වේ. නොදන්නා drives IT ට දෙන්න."
-    }
-  },
-  {
-    en:{q:"What does MFA (Multi-Factor Authentication) primarily protect against?",opts:["Viruses and malware on your device","Unauthorised login even if your password is stolen","Spam and junk emails","Slow internet speeds"],c:1,exp:"MFA blocks 99.9%+ of automated credential attacks (Microsoft, 2023). Even with your password, an attacker cannot access your account without the second factor (your phone code)."},
-    si:{q:"MFA (Multi-Factor Authentication) ප්‍රධාන වශයෙන් ආරක්ෂා කරන්නේ කුමකින්ද?",opts:["Device virus/malware","Password සොරාගෙන ගිණුමට ඇතුළු වීමෙන්","Spam emails","Internet speed"],c:1,exp:"MFA ස්වයංක්‍රීය credential ප්‍රහාර 99.9%+ ක් block කරයි (Microsoft, 2023). Password ලැබුණත් දෙවන සාධකය නොමැතිව ඇතුළු විය නොහැක."}
-  },
-  {
-    en:{
-      scenario:"You're at a coffee shop and need to access a work file on your phone. The shop has free Wi-Fi: 'CoffeeShop_Free_WiFi'.",
-      q:"What is the safest approach?",
-      opts:["Connect and log into your work account","Use your mobile data instead — avoid the public Wi-Fi","Connect but only check email, not cloud files","Ask staff for the password — that makes it safe"],
-      c:1,
-      exp:"Public Wi-Fi can be easily intercepted or spoofed. Use mobile data for any work access. If public Wi-Fi is unavoidable, use a VPN to encrypt your traffic."
-    },
-    si:{
-      scenario:"Coffee shop. 'CoffeeShop_Free_WiFi' නොමිලේ Wi-Fi. Work file එකක් access කරන්න ඕනේ.",
-      q:"ආරක්ෂිතම ක්‍රමය?",
-      opts:["Wi-Fi connect කරලා log in","Mobile data use කරන්න","Wi-Fi connect කරලා email පමණ","Staff ගෙන් password ඉල්ලන්න"],
-      c:1,
-      exp:"Public Wi-Fi intercepted/spoofed විය හැක. Work access සඳහා mobile data use කරන්න. Public Wi-Fi අනිවාර්ය නම් VPN use කරන්න."
-    }
-  },
-  {
-    en:{
-      scenario:"You get a WhatsApp from 'the MD': 'Buy 5 Google Play gift cards, LKR 10,000 each, and send me the codes. Confidential — don't tell anyone.'",
-      q:"What should you do?",
-      opts:["Buy them immediately — it's the MD","Ask for details via WhatsApp before buying","Recognise it as a scam. Don't comply. Report through official channels","Buy 2 as a compromise"],
-      c:2,
-      exp:"Gift card scams via impersonated executives are extremely common. No legitimate leader will ask for gift cards secretly. Verify all unusual financial requests through official phone lines, never via WhatsApp."
-    },
-    si:{
-      scenario:"'MD' ගෙන් WhatsApp: 'Google Play gift cards 5 ගෙන codes ගෙනෙන්න. රහසිගත.'",
-      q:"ඔබ කුමක් කළ යුතුද?",
-      opts:["MD ඉල්ලනවා, cards ගන්න","WhatsApp හරහා details ඉල්ලන්න","Scam ලෙස හඳුනාගෙන manager ට වාර්තා කරන්න","Cards 2 ගන්න"],
-      c:2,
-      exp:"Executive impersonation gift card scams ඉතා සාමාන්‍ය. නීත්‍යානුකූල leader රහසිගතව gift cards ඉල්ලන්නේ නැත. WhatsApp හරහා නොව official channels හරහා confirm කරන්න."
-    }
-  },
-  {
-    en:{q:"Your work phone (with email and cloud access) is stolen. What do you do FIRST?",opts:["Wait a day to see if it turns up","Post on social media","Report immediately to manager so IT can revoke cloud access","Buy a new phone first"],c:2,exp:"Report within 1 hour. IT can remotely revoke all cloud sessions and change credentials before an attacker accesses your data. Delays can mean data breaches."},
-    si:{q:"Cloud access ඇති work phone සොරාගත්තොත්, ඔබ පළමුව?",opts:["දවසක් බලන්න","Social media post කරන්න","IT ට cloud access revoke කිරීමට manager ට දන්වන්න","අලුත් phone ගන්න"],c:2,exp:"පැය 1 ඇතුළත වාර්තා කරන්න. IT ට remotely cloud sessions revoke කළ හැක. ප්‍රමාදයෙන් data breach හෝ data loss ඇති විය හැක."}
-  },
-  {
-    en:{
-      scenario:"A supplier emails: 'Our bank details have changed. Please use the new account below for the next payment.' The email looks identical to previous supplier emails.",
-      q:"What is the correct action?",
-      opts:["Update the details and process payment","Reply to the email to confirm","Call the supplier on their KNOWN phone number to verify before processing","Forward to personal email for review"],
-      c:2,
-      exp:"Business Email Compromise (BEC) uses hacked supplier accounts to intercept payments. Always verify bank detail changes by calling a KNOWN phone number. Replying to the email confirms nothing — the attacker receives your reply."
-    },
-    si:{
-      scenario:"සැපයුම්කරු email: 'අපේ bank details වෙනස් වුණා. ඊළඟ payment ට නව account use කරන්න.' Email normal.",
-      q:"නිවැරදි ක්‍රියාව?",
-      opts:["Details update කරලා payment process කරන්න","Reply කරලා confirm ඉල්ලන්න","දන්නා phone number ෙන් call කරලා verify කරලා process","Personal email ට forward"],
-      c:2,
-      exp:"BEC attacks hack කළ supplier accounts හරහා payments intercept කරයි. Bank detail changes සෑමවිටම KNOWN phone number ෙන් call කරලා verify කරන්න. Email reply කිරීම ප්‍රමාණවත් නැත."
-    }
-  },
-  {
-    en:{q:"Which is the BEST practice for your BYOD (personal) work device?",opts:["Use the same password for work and personal — easier to remember","Let trusted family members use your work apps","Separate accounts, enable screen lock, log out of work apps daily","Install any app from the internet to boost productivity"],c:2,exp:"BYOD security basics: (1) Separate work/personal accounts, (2) Screen lock (6-digit PIN or biometric), (3) Log out of work apps each day, (4) Never let others use your work apps."},
-    si:{q:"BYOD work device සඳහා හොඳම practice?",opts:["Work/personal ගිණුම් දෙකටම same password","Family ට apps use කරන්නට දෙන්න","Accounts separate, screen lock, daily log out","Internet ෙකින් ඕනෑම app install"],c:2,exp:"BYOD basics: (1) Work/personal accounts separate, (2) Screen lock (6-digit PIN or biometric), (3) Daily work apps log out, (4) Others ට apps access නොදෙන්න."}
-  }
-];
-
-// ═══════════════════════════════════════════════
-//  State
-// ═══════════════════════════════════════════════
-let quizStarted=false;
-let currentQ=0;
-let answers=new Array(Qs.length).fill(null);
-let answered=new Array(Qs.length).fill(false);
-let participantName='';
-
-function proceedFromName(){
-  const val=document.getElementById('participant-name').value.trim();
-  participantName=val||'Participant';
-  document.getElementById('name-screen').classList.add('hidden');
-  document.getElementById('quiz-area').classList.remove('hidden');
-  document.getElementById('nav-row').classList.remove('hidden');
-  document.getElementById('prog-wrap').classList.add('show');
-  quizStarted=true;
-  renderQuestion();
-}
-
-function renderQuestion(){
-  const q=Qs[currentQ][lang];
-  const area=document.getElementById('quiz-area');
-
-  let h=`<div class="q-card" id="qcard">`;
-  h+=`<div class="q-num">${T[lang].question} ${currentQ+1}</div>`;
-
-  if(q.scenario){
-    h+=`<div class="scenario-box"><span class="scenario-tag">${T[lang].scenario}</span><br>${q.scenario}</div>`;
-  }
-  h+=`<div class="q-text">${q.q}</div>`;
-  h+=`<div class="options">`;
-
-  q.opts.forEach((opt,i)=>{
-    let cls='opt';
-    let badge='';
-    if(answered[currentQ]){
-      cls+=' disabled';
-      if(i===q.c){cls+=' correct';badge='✓';}
-      else if(i===answers[currentQ]&&i!==q.c){cls+=' wrong';badge='✗';}
-    }else if(answers[currentQ]===i){
-      cls+=' selected';badge='●';
-    }
-    h+=`<div class="${cls}" onclick="pick(${i})">
-          <span class="badge">${badge}</span>
-          <span>${opt}</span>
-        </div>`;
-  });
-  h+=`</div>`;
-
-  if(answered[currentQ]){
-    const ok=answers[currentQ]===q.c;
-    h+=`<div class="explanation show ${ok?'ok':'fail'}">
-          <span class="exp-label">${ok?T[lang].correct:T[lang].wrong}</span>
-          ${q.exp}
-        </div>`;
-  }
-  h+=`</div>`;
-  area.innerHTML=h;
-
-  requestAnimationFrame(()=>{
-    const el=document.getElementById('qcard');
-    if(el)el.classList.add('show');
-  });
-
-  // Progress
-  const pct=((currentQ+1)/Qs.length)*100;
-  document.getElementById('prog-bar').style.width=pct+'%';
-  document.getElementById('prog-count').textContent=`${currentQ+1} / ${Qs.length}`;
-
-  // Buttons
-  document.getElementById('prev-btn').disabled=currentQ===0;
-  const allAnswered=answered.every(a=>a);
-  const isLast=currentQ===Qs.length-1;
-  const nxt=document.getElementById('next-text');
-  if(isLast&&allAnswered){nxt.textContent=T[lang].finish;}
-  else{nxt.textContent=T[lang].next;}
-}
-
-function pick(i){
-  if(answered[currentQ])return;
-  answers[currentQ]=i;
-  answered[currentQ]=true;
-  renderQuestion();
-}
-
-function nextQ(){
-  const allAnswered=answered.every(a=>a);
-  const isLast=currentQ===Qs.length-1;
-  if(isLast&&allAnswered){showResults();return;}
-  if(currentQ<Qs.length-1){currentQ++;renderQuestion();}
-}
-
-function prevQ(){
-  if(currentQ>0){currentQ--;renderQuestion();}
-}
-
-// ═══════════════════════════════════════════════
-//  Results
-// ═══════════════════════════════════════════════
-function showResults(){
-  document.getElementById('quiz-area').classList.add('hidden');
-  document.getElementById('nav-row').classList.add('hidden');
-  document.getElementById('prog-wrap').classList.remove('show');
-
-  let score=0;
-  Qs.forEach((q,i)=>{if(answers[i]===q[lang].c)score++;});
-  const pct=score/Qs.length;
-  const wrong=Qs.length-score;
-
-  let grade,gClass,gMsg;
-  if(pct>=.9){grade='A';gClass='ga';gMsg=T[lang].gradeA;}
-  else if(pct>=.7){grade='B';gClass='gb';gMsg=T[lang].gradeB;}
-  else if(pct>=.5){grade='C';gClass='gc';gMsg=T[lang].gradeC;}
-  else{grade='F';gClass='gf';gMsg=T[lang].gradeF;}
-
-  const dashOff=408-(408*pct);
-  const today=new Date().toLocaleDateString(lang==='si'?'si-LK':'en-US',{year:'numeric',month:'long',day:'numeric'});
-
-  let h=`<div class="results-card" id="res-card">
-    <div class="ring-wrap">
-      <svg viewBox="0 0 140 140">
-        <circle class="bg-ring" cx="70" cy="70" r="65"/>
-        <circle class="fg-ring" id="fg-ring" cx="70" cy="70" r="65"/>
-      </svg>
-      <div class="ring-center">
-        <span class="ring-num">${score}/10</span>
-        <span class="ring-sub">${T[lang].scoreOf}</span>
-      </div>
-    </div>
-    <h2>${T[lang].resultTitle}</h2>
-    <div class="grade-chip ${gClass}">${T[lang].yourGrade}: ${grade}</div>
-    <p class="result-msg">${gMsg}</p>
-
-    <div class="breakdown">
-      <div class="bk-item bk-correct">
-        <div class="bk-num">${score}</div>
-        <div class="bk-lbl">${T[lang].correctLbl}</div>
-      </div>
-      <div class="bk-item bk-wrong">
-        <div class="bk-num">${wrong}</div>
-        <div class="bk-lbl">${T[lang].wrongLbl}</div>
-      </div>
-      <div class="bk-item bk-grade">
-        <div class="bk-num">${grade}</div>
-        <div class="bk-lbl">${T[lang].gradeLbl}</div>
-      </div>
-    </div>`;
-
-  if(pct<0.7){
-    h+=`<div class="course-box">
-      <h4>${T[lang].suggestTitle}</h4>
-      <div class="course-item">
-        <div class="c-title">Introduction to Cybersecurity</div>
-        <div class="c-provider">Cisco Networking Academy — 100% Free</div>
-        <a class="c-link" href="https://www.netacad.com/courses/cybersecurity/introduction-cybersecurity" target="_blank">→ netacad.com</a>
-      </div>
-      <div class="course-item">
-        <div class="c-title">Cybersecurity Awareness Essentials</div>
-        <div class="c-provider">IBM SkillsBuild — 100% Free</div>
-        <a class="c-link" href="https://skillsbuild.org/students/course-catalog/cybersecurity" target="_blank">→ skillsbuild.org</a>
-      </div>
-      <div class="course-item">
-        <div class="c-title">Phishing Awareness Training</div>
-        <div class="c-provider">KnowBe4 — Free Module</div>
-        <a class="c-link" href="https://www.knowbe4.com/security-awareness-training" target="_blank">→ knowbe4.com</a>
-      </div>
-      <div class="course-item">
-        <div class="c-title">Cyber Aces Security Basics</div>
-        <div class="c-provider">SANS Institute — Free</div>
-        <a class="c-link" href="https://www.cyberaces.org/" target="_blank">→ cyberaces.org</a>
-      </div>
-    </div>`;
-  }
-
-  // Certificate
-  h+=`<div class="cert-wrap">
-    <div class="cert-name-row">
-      <input type="text" class="cert-name-input" id="cert-name-in"
-        placeholder="${T[lang].certNamePh}"
-        value="${participantName}"
-        oninput="updateCertName(this.value)">
-    </div>
-    <div class="cert-preview" id="cert-el">
-      <div class="cert-top-bar"></div>
-      <div class="cert-inner">
-        <div class="cert-logo">🛡️</div>
-        <div class="cert-title-txt">${T[lang].certTitle}</div>
-        <div class="cert-sub-txt">${T[lang].certSub}</div>
-        <div class="cert-awarded-txt">${T[lang].certAwarded}</div>
-        <div class="cert-name-display" id="cert-name-display">${participantName}</div>
-        <div class="cert-score-txt">${T[lang].certScore}: ${score}/10 &nbsp;|&nbsp; ${T[lang].yourGrade}: ${grade}</div>
-        <div class="cert-company-txt">C Four Industries (Pvt) Ltd — IE3052 Cybersecurity Awareness Training</div>
-        <div class="cert-date-txt">${T[lang].certDate}: ${today}</div>
-        <div class="cert-seal">🏅</div>
-      </div>
-      <div class="cert-bot-bar"></div>
-    </div>
-    <div class="nav-row" style="margin-top:16px;flex-wrap:wrap;">
-      <button class="btn btn-primary" onclick="dlCert()">📥 ${T[lang].dlCert}</button>
-      <button class="btn btn-secondary" onclick="doPrint()">🖨️ ${T[lang].printCert}</button>
-      <button class="btn btn-secondary" onclick="doRetake()">🔄 ${T[lang].retake}</button>
-    </div>
-  </div></div>`;
-
-  const ra=document.getElementById('results-area');
-  ra.classList.remove('hidden');
-  ra.innerHTML=h;
-
-  requestAnimationFrame(()=>{
-    document.getElementById('res-card').classList.add('show');
-    setTimeout(()=>{
-      const ring=document.getElementById('fg-ring');
-      if(ring)ring.style.strokeDashoffset=dashOff;
-    },350);
-  });
-}
-
-function updateCertName(v){
-  const d=document.getElementById('cert-name-display');
-  if(d)d.textContent=v||'—';
-}
-
-function dlCert(){
-  const name=document.getElementById('cert-name-in').value||participantName||'Participant';
-  const score=Qs.reduce((s,q,i)=>s+(answers[i]===q[lang].c?1:0),0);
-  const pct=score/Qs.length;
-  let grade=pct>=.9?'A':pct>=.7?'B':pct>=.5?'C':'F';
-  const today=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
-
-  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Certificate — ${name}</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f4f8;font-family:Georgia,'Times New Roman',serif;padding:20px}
-.cert{background:#fff;width:min(750px,100%);padding:50px 40px;border:3px solid #0D7A7A;position:relative;box-shadow:0 8px 40px rgba(0,0,0,.12)}
-.cert::before,.cert::after{content:'';position:absolute;left:15px;right:15px;height:4px;background:linear-gradient(90deg,#0D7A7A,#3b82f6,#0D7A7A)}
-.cert::before{top:15px}.cert::after{bottom:15px}
-.inner{border:1px solid #e2e8f0;padding:36px 28px;text-align:center}
-.logo{font-size:44px;margin-bottom:8px}
-.title{font-size:26px;font-weight:bold;color:#0b1120;margin:10px 0 2px}
-.sub{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:4px;margin-bottom:24px}
-.awarded{font-size:13px;color:#64748b;margin-bottom:6px}
-.name{font-size:30px;font-weight:bold;color:#0D7A7A;font-style:italic;border-bottom:2px solid #0D7A7A;display:inline-block;padding-bottom:4px;margin:10px 0 18px}
-.score{font-size:13px;color:#475569;margin:8px 0}
-.company{font-size:12px;color:#6b7280;margin:4px 0}
-.date{font-size:11px;color:#9ca3af;margin-top:8px}
-.seal{font-size:32px;margin-top:16px}
-@media print{body{background:#fff!important}}
-</style></head><body>
-<div class="cert"><div class="inner">
-<div class="logo">🛡️</div>
-<div class="title">${T[lang].certTitle}</div>
-<div class="sub">${T[lang].certSub}</div>
-<div class="awarded">${T[lang].certAwarded}</div>
-<div class="name">${name}</div>
-<div class="score">${T[lang].certScore}: ${score}/10 | ${T[lang].yourGrade}: ${grade}</div>
-<div class="company">C Four Industries (Pvt) Ltd</div>
-<div class="company">IE3052 — Information Security Risk Management Awareness Training</div>
-<div class="date">${T[lang].certDate}: ${today}</div>
-<div class="seal">🏅</div>
-</div></div>
-<script>setTimeout(()=>{window.print()},800)<\/script>
-</body></html>`;
-
-  const blob=new Blob([html],{type:'text/html'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;
-  a.download=`CyberSecurity_Certificate_${name.replace(/\s+/g,'_')}.html`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-function doPrint(){
-  const el=document.getElementById('cert-el');
-  const w=window.open('','_blank','width=900,height=650');
-  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#fff;padding:20px;font-family:Georgia,serif}
-</style></head><body>${el.outerHTML}
-<script>window.onload=function(){window.print()}<\/script></body></html>`);
-  w.document.close();
-}
-
-function doRetake(){
-  currentQ=0;
-  answers=new Array(Qs.length).fill(null);
-  answered=new Array(Qs.length).fill(false);
-  document.getElementById('results-area').classList.add('hidden');
-  document.getElementById('results-area').innerHTML='';
-  document.getElementById('quiz-area').classList.remove('hidden');
-  document.getElementById('nav-row').classList.remove('hidden');
-  document.getElementById('prog-wrap').classList.add('show');
-  renderQuestion();
-}
-</script>
-</body>
+}, 30000);
+</script></body>
 </html>
