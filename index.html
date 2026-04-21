@@ -1,707 +1,514 @@
 <!DOCTYPE html>
-<html lang="en"><plasmo-csui id="g0-textarea-recorder"></plasmo-csui>
-<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<title>⚠ SECURITY ALERT - YOUR SYSTEM HAS BEEN COMPROMISED</title>
-	<link href="https://fonts.googleapis.com/css2?family=VT323&amp;family=Share+Tech+Mono&amp;family=DM+Sans:wght@400;500;600;700&amp;family=Noto+Sans+Sinhala:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-	<style type="text/css">*{margin:0;padding:0;box-sizing:border-box}
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>⚠ SECURITY ALERT - YOUR SYSTEM HAS BEEN COMPROMISED</title>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
 html,body{overflow-x:hidden}
-body{
-  font-family:'Share Tech Mono','VT323',monospace;
-  background:#000;
-  color:#ff0033;
-  min-height:100vh;
-  position:relative;
-}
+body{font-family:'Share Tech Mono','VT323',monospace;background:#000;color:#ff0033;min-height:100vh;position:relative}
 
 /* ============ HACK SCREEN ============ */
-.hack-screen{
-  min-height:100vh;
-  padding:20px;
-  position:relative;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-
-/* Glitch / scan lines */
-.hack-screen::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  background:repeating-linear-gradient(0deg,rgba(255,0,51,.04) 0px,rgba(255,0,51,.04) 1px,transparent 1px,transparent 3px);
-  pointer-events:none;
-  z-index:2;
-  animation:scanlines .15s linear infinite;
-}
-@keyframes scanlines{
-  0%{transform:translateY(0)}
-  100%{transform:translateY(3px)}
-}
-
-.hack-screen::after{
-  content:'';
-  position:fixed;
-  inset:0;
-  background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.8) 100%);
-  pointer-events:none;
-  z-index:1;
-}
-
-/* Matrix rain */
-.matrix-bg{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  opacity:.25;
-  pointer-events:none;
-}
-
-.skull{
-  font-size:5rem;
-  color:#ff0033;
-  margin-bottom:15px;
-  text-shadow:0 0 20px rgba(255,0,51,.8),0 0 40px rgba(255,0,51,.4);
-  animation:skullPulse 1s ease-in-out infinite;
-  z-index:3;
-  position:relative;
-}
-@keyframes skullPulse{
-  0%,100%{transform:scale(1);filter:brightness(1)}
-  50%{transform:scale(1.08);filter:brightness(1.4)}
-}
-
-.hack-title{
-  font-family:'VT323',monospace;
-  font-size:clamp(2.2rem,8vw,5rem);
-  color:#ff0033;
-  text-align:center;
-  letter-spacing:4px;
-  margin-bottom:8px;
-  text-shadow:3px 0 0 #00ffff,-3px 0 0 #ffff00,0 0 25px rgba(255,0,51,.6);
-  animation:glitch 2.5s infinite;
-  z-index:3;
-  position:relative;
-  line-height:1;
-}
-@keyframes glitch{
-  0%,95%,100%{text-shadow:3px 0 0 #00ffff,-3px 0 0 #ffff00,0 0 25px rgba(255,0,51,.6);transform:translate(0)}
-  96%{text-shadow:-3px 0 0 #00ffff,3px 0 0 #ffff00;transform:translate(2px,-1px)}
-  97%{text-shadow:3px 0 0 #00ffff,-3px 0 0 #ffff00;transform:translate(-2px,1px)}
-  98%{text-shadow:0 0 0 #00ffff,0 0 0 #ffff00;transform:translate(1px,2px)}
-}
-
-.hack-sub{
-  font-family:'Share Tech Mono',monospace;
-  font-size:clamp(.9rem,2.2vw,1.2rem);
-  color:#ff6b6b;
-  margin-bottom:25px;
-  letter-spacing:2px;
-  text-align:center;
-  z-index:3;
-  position:relative;
-  animation:flicker 3s infinite;
-}
-@keyframes flicker{
-  0%,100%{opacity:1}
-  92%{opacity:1}
-  93%{opacity:.3}
-  94%{opacity:1}
-}
-
-.terminal{
-  background:rgba(0,0,0,.85);
-  border:2px solid #ff0033;
-  border-radius:4px;
-  padding:20px 22px;
-  max-width:700px;
-  width:100%;
-  font-family:'Share Tech Mono',monospace;
-  font-size:.88rem;
-  line-height:1.8;
-  color:#00ff00;
-  box-shadow:0 0 40px rgba(255,0,51,.3),inset 0 0 30px rgba(255,0,51,.05);
-  z-index:3;
-  position:relative;
-  margin-bottom:25px;
-  max-height:50vh;
-  overflow:hidden;
-}
-
-.terminal-header{
-  color:#ff0033;
-  font-weight:bold;
-  margin-bottom:10px;
-  border-bottom:1px dashed #ff0033;
-  padding-bottom:6px;
-  font-size:.82rem;
-}
-
-.terminal-line{
-  opacity:0;
-  animation:typeIn .1s forwards;
-}
-@keyframes typeIn{
-  to{opacity:1}
-}
-.terminal-line:nth-child(1){animation-delay:.3s}
-.terminal-line:nth-child(2){animation-delay:.6s}
-.terminal-line:nth-child(3){animation-delay:.9s}
-.terminal-line:nth-child(4){animation-delay:1.2s}
-.terminal-line:nth-child(5){animation-delay:1.5s}
-.terminal-line:nth-child(6){animation-delay:1.8s}
-.terminal-line:nth-child(7){animation-delay:2.1s}
-.terminal-line:nth-child(8){animation-delay:2.4s}
-.terminal-line:nth-child(9){animation-delay:2.7s}
-
-.terminal .red{color:#ff0033}
-.terminal .yellow{color:#ffeb3b}
-.terminal .white{color:#fff}
-.cursor{
-  display:inline-block;
-  background:#00ff00;
-  width:10px;
-  height:16px;
-  animation:blink .8s infinite;
-  vertical-align:middle;
-}
-@keyframes blink{
-  0%,50%{opacity:1}
-  51%,100%{opacity:0}
-}
-
-.warning-banner{
-  background:linear-gradient(90deg,#ff0033 0%,#8b0000 50%,#ff0033 100%);
-  color:#fff;
-  padding:12px 20px;
-  font-family:'VT323',monospace;
-  font-size:1.3rem;
-  font-weight:bold;
-  letter-spacing:3px;
-  text-align:center;
-  max-width:700px;
-  width:100%;
-  border-radius:4px;
-  z-index:3;
-  position:relative;
-  margin-bottom:20px;
-  animation:bannerBlink 1.2s infinite;
-  box-shadow:0 0 30px rgba(255,0,51,.5);
-}
-@keyframes bannerBlink{
-  0%,100%{box-shadow:0 0 30px rgba(255,0,51,.5)}
-  50%{box-shadow:0 0 50px rgba(255,0,51,.9)}
-}
-
-.fake-action{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  justify-content:center;
-  z-index:3;
-  position:relative;
-  margin-bottom:15px;
-}
-
-.btn-fake{
-  background:linear-gradient(135deg,#ff0033,#8b0000);
-  color:#fff;
-  border:2px solid #ff6b6b;
-  padding:14px 30px;
-  font-family:'VT323',monospace;
-  font-size:1.2rem;
-  font-weight:bold;
-  letter-spacing:2px;
-  cursor:pointer;
-  text-transform:uppercase;
-  box-shadow:0 0 20px rgba(255,0,51,.5);
-  transition:all .3s;
-  animation:btnPulse 1.5s infinite;
-}
-@keyframes btnPulse{
-  0%,100%{box-shadow:0 0 20px rgba(255,0,51,.5)}
-  50%{box-shadow:0 0 35px rgba(255,0,51,.9)}
-}
-.btn-fake:hover{
-  transform:scale(1.05);
-  background:linear-gradient(135deg,#ff3355,#aa0000);
-}
-
-.fake-timer{
-  color:#ff0033;
-  font-family:'VT323',monospace;
-  font-size:1.4rem;
-  z-index:3;
-  position:relative;
-  letter-spacing:2px;
-  text-align:center;
-  animation:flicker 2s infinite;
-}
+.hack-screen{min-height:100vh;padding:20px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.hack-screen::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,rgba(255,0,51,.04) 0px,rgba(255,0,51,.04) 1px,transparent 1px,transparent 3px);pointer-events:none;z-index:2;animation:scanlines .15s linear infinite}
+@keyframes scanlines{0%{transform:translateY(0)}100%{transform:translateY(3px)}}
+.hack-screen::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.8) 100%);pointer-events:none;z-index:1}
+.matrix-bg{position:fixed;inset:0;z-index:0;opacity:.25;pointer-events:none}
+.skull{font-size:5rem;color:#ff0033;margin-bottom:15px;text-shadow:0 0 20px rgba(255,0,51,.8),0 0 40px rgba(255,0,51,.4);animation:skullPulse 1s ease-in-out infinite;z-index:3;position:relative}
+@keyframes skullPulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.08);filter:brightness(1.4)}}
+.hack-title{font-family:'VT323',monospace;font-size:clamp(2.2rem,8vw,5rem);color:#ff0033;text-align:center;letter-spacing:4px;margin-bottom:8px;text-shadow:3px 0 0 #00ffff,-3px 0 0 #ffff00,0 0 25px rgba(255,0,51,.6);animation:glitch 2.5s infinite;z-index:3;position:relative;line-height:1}
+@keyframes glitch{0%,95%,100%{text-shadow:3px 0 0 #00ffff,-3px 0 0 #ffff00,0 0 25px rgba(255,0,51,.6);transform:translate(0)}96%{text-shadow:-3px 0 0 #00ffff,3px 0 0 #ffff00;transform:translate(2px,-1px)}97%{text-shadow:3px 0 0 #00ffff,-3px 0 0 #ffff00;transform:translate(-2px,1px)}98%{text-shadow:0 0 0 #00ffff,0 0 0 #ffff00;transform:translate(1px,2px)}}
+.hack-sub{font-family:'Share Tech Mono',monospace;font-size:clamp(.9rem,2.2vw,1.2rem);color:#ff6b6b;margin-bottom:25px;letter-spacing:2px;text-align:center;z-index:3;position:relative;animation:flicker 3s infinite}
+@keyframes flicker{0%,100%{opacity:1}92%{opacity:1}93%{opacity:.3}94%{opacity:1}}
+.terminal{background:rgba(0,0,0,.85);border:2px solid #ff0033;border-radius:4px;padding:20px 22px;max-width:700px;width:100%;font-family:'Share Tech Mono',monospace;font-size:.88rem;line-height:1.8;color:#00ff00;box-shadow:0 0 40px rgba(255,0,51,.3),inset 0 0 30px rgba(255,0,51,.05);z-index:3;position:relative;margin-bottom:25px;max-height:50vh;overflow:hidden}
+.terminal-header{color:#ff0033;font-weight:bold;margin-bottom:10px;border-bottom:1px dashed #ff0033;padding-bottom:6px;font-size:.82rem}
+.terminal-line{opacity:0;animation:typeIn .1s forwards}
+@keyframes typeIn{to{opacity:1}}
+.terminal-line:nth-child(1){animation-delay:.3s}.terminal-line:nth-child(2){animation-delay:.6s}.terminal-line:nth-child(3){animation-delay:.9s}.terminal-line:nth-child(4){animation-delay:1.2s}.terminal-line:nth-child(5){animation-delay:1.5s}.terminal-line:nth-child(6){animation-delay:1.8s}.terminal-line:nth-child(7){animation-delay:2.1s}.terminal-line:nth-child(8){animation-delay:2.4s}.terminal-line:nth-child(9){animation-delay:2.7s}
+.terminal .red{color:#ff0033}.terminal .yellow{color:#ffeb3b}.terminal .white{color:#fff}
+.cursor{display:inline-block;background:#00ff00;width:10px;height:16px;animation:blink .8s infinite;vertical-align:middle}
+@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+.warning-banner{background:linear-gradient(90deg,#ff0033 0%,#8b0000 50%,#ff0033 100%);color:#fff;padding:12px 20px;font-family:'VT323',monospace;font-size:1.3rem;font-weight:bold;letter-spacing:3px;text-align:center;max-width:700px;width:100%;border-radius:4px;z-index:3;position:relative;margin-bottom:20px;animation:bannerBlink 1.2s infinite;box-shadow:0 0 30px rgba(255,0,51,.5)}
+@keyframes bannerBlink{0%,100%{box-shadow:0 0 30px rgba(255,0,51,.5)}50%{box-shadow:0 0 50px rgba(255,0,51,.9)}}
+.fake-action{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;z-index:3;position:relative;margin-bottom:15px}
+.btn-fake{background:linear-gradient(135deg,#ff0033,#8b0000);color:#fff;border:2px solid #ff6b6b;padding:14px 30px;font-family:'VT323',monospace;font-size:1.2rem;font-weight:bold;letter-spacing:2px;cursor:pointer;text-transform:uppercase;box-shadow:0 0 20px rgba(255,0,51,.5);transition:all .3s;animation:btnPulse 1.5s infinite}
+@keyframes btnPulse{0%,100%{box-shadow:0 0 20px rgba(255,0,51,.5)}50%{box-shadow:0 0 35px rgba(255,0,51,.9)}}
+.btn-fake:hover{transform:scale(1.05);background:linear-gradient(135deg,#ff3355,#aa0000)}
+.fake-timer{color:#ff0033;font-family:'VT323',monospace;font-size:1.4rem;z-index:3;position:relative;letter-spacing:2px;text-align:center;animation:flicker 2s infinite}
 
 /* ============ REVEAL SCREEN ============ */
-.reveal-screen{
-  display:none;
-  min-height:100vh;
-  background:linear-gradient(135deg,#0b1120 0%,#1a2540 100%);
-  padding:30px 20px;
-  position:relative;
-  overflow:hidden;
-}
-.reveal-screen.show{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  animation:revealFade .8s ease-out;
-}
-@keyframes revealFade{
-  0%{opacity:0;transform:scale(.95)}
-  100%{opacity:1;transform:scale(1)}
-}
-
-.reveal-screen::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:radial-gradient(ellipse at 30% 20%,rgba(14,165,233,.15) 0%,transparent 60%),
-             radial-gradient(ellipse at 70% 80%,rgba(0,201,167,.12) 0%,transparent 55%);
-  pointer-events:none;
-}
-
-.reveal-container{
-  max-width:750px;
-  width:100%;
-  position:relative;
-  z-index:2;
-  text-align:center;
-  font-family:'DM Sans','Noto Sans Sinhala',sans-serif;
-}
-
-.relief-icon{
-  font-size:4rem;
-  margin-bottom:15px;
-  animation:reliefBounce 1s ease-out;
-}
-@keyframes reliefBounce{
-  0%{transform:scale(0) rotate(-180deg);opacity:0}
-  60%{transform:scale(1.2) rotate(10deg);opacity:1}
-  100%{transform:scale(1) rotate(0);opacity:1}
-}
-
-.reveal-title{
-  font-size:clamp(1.8rem,5vw,2.8rem);
-  font-weight:700;
-  color:#00c9a7;
-  margin-bottom:10px;
-  letter-spacing:-.01em;
-  line-height:1.2;
-}
-
-.reveal-title-si{
-  font-size:clamp(1.4rem,4.5vw,2.2rem);
-  font-weight:700;
-  color:#22c55e;
-  margin-bottom:25px;
-  font-family:'Noto Sans Sinhala',sans-serif;
-  line-height:1.3;
-}
-
-.reveal-card{
-  background:rgba(19,27,46,.9);
-  border:1px solid #1e3a5f;
-  border-radius:16px;
-  padding:28px 26px;
-  margin-bottom:18px;
-  text-align:left;
-  backdrop-filter:blur(10px);
-  box-shadow:0 20px 60px rgba(0,0,0,.4);
-}
-
-.reveal-card h3{
-  color:#00c9a7;
-  font-size:1.05rem;
-  font-weight:700;
-  margin-bottom:10px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  letter-spacing:-.01em;
-}
-
-.reveal-card h3 .si-label{
-  color:#0ea5e9;
-  font-size:.9rem;
-  font-weight:500;
-  font-family:'Noto Sans Sinhala',sans-serif;
-}
-
-.reveal-card p{
-  color:#cbd5e1;
-  line-height:1.7;
-  font-size:.95rem;
-  margin-bottom:10px;
-}
-
-.reveal-card p.si-text{
-  color:#94a3b8;
-  font-family:'Noto Sans Sinhala',sans-serif;
-  font-size:.92rem;
-  padding-left:14px;
-  border-left:2px solid #0ea5e9;
-  margin-top:10px;
-}
-
-.divider{
-  height:1px;
-  background:linear-gradient(90deg,transparent,#1e3a5f,transparent);
-  margin:14px 0;
-}
-
-.signs-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:12px;
-}
-@media(max-width:600px){
-  .signs-grid{grid-template-columns:1fr}
-}
-
-.sign-item{
-  background:rgba(239,68,68,.08);
-  border:1px solid rgba(239,68,68,.2);
-  border-radius:8px;
-  padding:10px 12px;
-  color:#fca5a5;
-  font-size:.85rem;
-  line-height:1.5;
-}
-
-.sign-item strong{
-  color:#ef4444;
-  display:block;
-  margin-bottom:3px;
-  font-size:.88rem;
-}
-
-.sign-item .si{
-  color:#cbd5e1;
-  font-family:'Noto Sans Sinhala',sans-serif;
-  font-size:.82rem;
-  display:block;
-  margin-top:4px;
-}
-
-.rules-list{
-  list-style:none;
-  padding:0;
-}
-
-.rules-list li{
-  padding:10px 0 10px 32px;
-  position:relative;
-  color:#e2e8f0;
-  font-size:.95rem;
-  line-height:1.6;
-  border-bottom:1px dashed rgba(30,58,95,.5);
-}
+.reveal-screen{display:none;min-height:100vh;background:linear-gradient(135deg,#0b1120 0%,#1a2540 100%);padding:30px 20px;position:relative;overflow:hidden}
+.reveal-screen.show{display:flex;flex-direction:column;align-items:center;justify-content:center;animation:revealFade .8s ease-out}
+@keyframes revealFade{0%{opacity:0;transform:scale(.95)}100%{opacity:1;transform:scale(1)}}
+.reveal-screen::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(14,165,233,.15) 0%,transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(0,201,167,.12) 0%,transparent 55%);pointer-events:none}
+.reveal-container{max-width:750px;width:100%;position:relative;z-index:2;text-align:center;font-family:'DM Sans','Noto Sans Sinhala',sans-serif}
+.relief-icon{font-size:4rem;margin-bottom:15px;animation:reliefBounce 1s ease-out}
+@keyframes reliefBounce{0%{transform:scale(0) rotate(-180deg);opacity:0}60%{transform:scale(1.2) rotate(10deg);opacity:1}100%{transform:scale(1) rotate(0);opacity:1}}
+.reveal-title{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:700;color:#00c9a7;margin-bottom:10px;letter-spacing:-.01em;line-height:1.2}
+.reveal-title-si{font-size:clamp(1.4rem,4.5vw,2.2rem);font-weight:700;color:#22c55e;margin-bottom:25px;font-family:'Noto Sans Sinhala',sans-serif;line-height:1.3}
+.reveal-card{background:rgba(19,27,46,.9);border:1px solid #1e3a5f;border-radius:16px;padding:28px 26px;margin-bottom:18px;text-align:left;backdrop-filter:blur(10px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.reveal-card h3{color:#00c9a7;font-size:1.05rem;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:10px;letter-spacing:-.01em}
+.reveal-card h3 .si-label{color:#0ea5e9;font-size:.9rem;font-weight:500;font-family:'Noto Sans Sinhala',sans-serif}
+.reveal-card p{color:#cbd5e1;line-height:1.7;font-size:.95rem;margin-bottom:10px}
+.reveal-card p.si-text{color:#94a3b8;font-family:'Noto Sans Sinhala',sans-serif;font-size:.92rem;padding-left:14px;border-left:2px solid #0ea5e9;margin-top:10px}
+.signs-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+@media(max-width:600px){.signs-grid{grid-template-columns:1fr}}
+.sign-item{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:10px 12px;color:#fca5a5;font-size:.85rem;line-height:1.5}
+.sign-item strong{color:#ef4444;display:block;margin-bottom:3px;font-size:.88rem}
+.sign-item .si{color:#cbd5e1;font-family:'Noto Sans Sinhala',sans-serif;font-size:.82rem;display:block;margin-top:4px}
+.rules-list{list-style:none;padding:0}
+.rules-list li{padding:10px 0 10px 32px;position:relative;color:#e2e8f0;font-size:.95rem;line-height:1.6;border-bottom:1px dashed rgba(30,58,95,.5)}
 .rules-list li:last-child{border-bottom:none}
+.rules-list li::before{content:'✓';position:absolute;left:0;top:10px;width:22px;height:22px;background:#00c9a7;color:#0b1120;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:.75rem}
+.rules-list li .si-rule{display:block;color:#94a3b8;font-size:.85rem;margin-top:4px;font-family:'Noto Sans Sinhala',sans-serif}
+.cta-section{margin-top:25px;text-align:center}
+.btn-training{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#00c9a7,#0ea5e9);color:#0b1120;padding:16px 36px;border:none;border-radius:12px;font-size:1.05rem;font-weight:700;cursor:pointer;letter-spacing:.02em;font-family:inherit;box-shadow:0 10px 30px rgba(0,201,167,.3);transition:all .3s;text-decoration:none}
+.btn-training:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,201,167,.5)}
+.cta-section p{color:#64748b;font-size:.88rem;margin-top:14px;line-height:1.6}
+.cta-section p .si{display:block;color:#94a3b8;font-family:'Noto Sans Sinhala',sans-serif;margin-top:4px;font-size:.85rem}
+.company-tag{display:inline-block;margin-top:20px;padding:8px 22px;background:rgba(0,201,167,.1);border:1px solid rgba(0,201,167,.3);border-radius:20px;color:#00c9a7;font-size:.82rem;font-weight:600;letter-spacing:.04em}
+.gotcha-badge{position:absolute;top:20px;right:20px;background:#f59e0b;color:#000;padding:6px 16px;border-radius:20px;font-size:.8rem;font-weight:700;letter-spacing:.05em;box-shadow:0 4px 15px rgba(245,158,11,.4);z-index:10;animation:badgeWiggle 2s ease-in-out infinite}
+@keyframes badgeWiggle{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@media(max-width:500px){.gotcha-badge{top:10px;right:10px;font-size:.7rem;padding:4px 10px}.terminal{font-size:.78rem;padding:14px}.reveal-card{padding:20px 18px}}
 
-.rules-list li::before{
-  content:'✓';
-  position:absolute;
-  left:0;
-  top:10px;
-  width:22px;
-  height:22px;
-  background:#00c9a7;
-  color:#0b1120;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-  font-size:.75rem;
-}
-
-.rules-list li .si-rule{
-  display:block;
-  color:#94a3b8;
-  font-size:.85rem;
-  margin-top:4px;
-  font-family:'Noto Sans Sinhala',sans-serif;
-}
-
-.cta-section{
-  margin-top:25px;
-  text-align:center;
-}
-
-.btn-training{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  background:linear-gradient(135deg,#00c9a7,#0ea5e9);
-  color:#0b1120;
-  padding:16px 36px;
-  border:none;
-  border-radius:12px;
-  font-size:1.05rem;
-  font-weight:700;
-  cursor:pointer;
-  letter-spacing:.02em;
-  font-family:inherit;
-  box-shadow:0 10px 30px rgba(0,201,167,.3);
-  transition:all .3s;
-  text-decoration:none;
-}
-
-.btn-training:hover{
-  transform:translateY(-2px);
-  box-shadow:0 14px 40px rgba(0,201,167,.5);
-}
-
-.cta-section p{
-  color:#64748b;
-  font-size:.88rem;
-  margin-top:14px;
-  line-height:1.6;
-}
-
-.cta-section p .si{
-  display:block;
-  color:#94a3b8;
-  font-family:'Noto Sans Sinhala',sans-serif;
-  margin-top:4px;
-  font-size:.85rem;
-}
-
-.company-tag{
-  display:inline-block;
-  margin-top:20px;
-  padding:8px 22px;
-  background:rgba(0,201,167,.1);
-  border:1px solid rgba(0,201,167,.3);
-  border-radius:20px;
-  color:#00c9a7;
-  font-size:.82rem;
-  font-weight:600;
-  letter-spacing:.04em;
-}
-
-.gotcha-badge{
-  position:absolute;
-  top:20px;
-  right:20px;
-  background:#f59e0b;
-  color:#000;
-  padding:6px 16px;
-  border-radius:20px;
-  font-size:.8rem;
-  font-weight:700;
-  letter-spacing:.05em;
-  box-shadow:0 4px 15px rgba(245,158,11,.4);
-  z-index:10;
-  animation:badgeWiggle 2s ease-in-out infinite;
-}
-@keyframes badgeWiggle{
-  0%,100%{transform:rotate(-3deg)}
-  50%{transform:rotate(3deg)}
-}
-
-@media(max-width:500px){
-  .gotcha-badge{top:10px;right:10px;font-size:.7rem;padding:4px 10px}
-  .terminal{font-size:.78rem;padding:14px}
-  .reveal-card{padding:20px 18px}
-}
-	</style>
+/* ============ QUIZ SCREEN ============ */
+.quiz-screen{display:none;min-height:100vh;background:#0b1120;color:#e2e8f0;font-family:'DM Sans','Noto Sans Sinhala',sans-serif;position:relative;overflow-x:hidden}
+.quiz-screen.show{display:block;animation:revealFade .5s ease-out}
+.quiz-screen::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 20% 0%,rgba(14,165,233,.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 100%,rgba(0,201,167,.06) 0%,transparent 50%);pointer-events:none;z-index:0}
+.quiz-screen .container{max-width:800px;margin:0 auto;padding:20px;position:relative;z-index:1}
+.lang-bar{text-align:center;padding:30px 0 10px}
+.lang-bar button{background:#1a2540;color:#e2e8f0;border:1px solid #1e3a5f;padding:10px 28px;margin:0 6px;border-radius:8px;cursor:pointer;font-size:.95rem;font-family:inherit;transition:all .3s}
+.lang-bar button:hover,.lang-bar button.active{background:#00c9a7;color:#0b1120;border-color:#00c9a7;font-weight:600}
+.q-header{text-align:center;padding:30px 0 40px}
+.q-header .shield{width:60px;height:60px;margin:0 auto 18px;background:linear-gradient(135deg,#00c9a7,#0ea5e9);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 0 30px rgba(0,201,167,.15)}
+.q-header h1{font-size:1.7rem;font-weight:700;letter-spacing:-.02em;margin-bottom:8px;color:#e2e8f0}
+.q-header p{color:#64748b;font-size:.95rem;max-width:500px;margin:0 auto;line-height:1.6}
+.q-header .company{display:inline-block;margin-top:14px;padding:6px 18px;background:#131b2e;border:1px solid #1e3a5f;border-radius:20px;font-size:.8rem;color:#00c9a7;font-weight:600;letter-spacing:.04em}
+.progress-wrap{margin:0 0 30px;opacity:0;transition:opacity .5s}
+.progress-wrap.show{opacity:1}
+.progress-info{display:flex;justify-content:space-between;margin-bottom:8px;font-size:.82rem;color:#64748b}
+.progress-bar{height:6px;background:#1a2540;border-radius:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#00c9a7,#0ea5e9);border-radius:10px;transition:width .5s cubic-bezier(.4,0,.2,1);width:0}
+.question-card{background:#131b2e;border:1px solid #1e3a5f;border-radius:16px;padding:32px 28px;margin-bottom:24px;opacity:0;transform:translateY(20px);transition:all .5s cubic-bezier(.4,0,.2,1)}
+.question-card.show{opacity:1;transform:translateY(0)}
+.q-number{font-size:.75rem;color:#00c9a7;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.q-text{font-size:1.05rem;font-weight:600;line-height:1.6;margin-bottom:22px;color:#e2e8f0}
+.q-scenario{background:#1a2540;border-left:3px solid #f59e0b;padding:14px 18px;border-radius:0 10px 10px 0;margin-bottom:20px;font-size:.9rem;line-height:1.6;color:#94a3b8}
+.q-scenario .tag{display:inline-block;background:rgba(245,158,11,.12);color:#f59e0b;padding:2px 10px;border-radius:4px;font-size:.72rem;font-weight:600;margin-bottom:6px;letter-spacing:.04em}
+.options{display:flex;flex-direction:column;gap:10px}
+.option{background:#1a2540;border:1.5px solid #1e3a5f;border-radius:10px;padding:14px 18px;cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:14px;font-size:.92rem;line-height:1.5;color:#e2e8f0}
+.option:hover{border-color:#00c9a7;background:rgba(0,201,167,.05)}
+.option .marker{width:22px;height:22px;border-radius:50%;border:2px solid #1e3a5f;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .25s;font-size:.7rem}
+.option.selected{border-color:#00c9a7;background:rgba(0,201,167,.08)}
+.option.selected .marker{background:#00c9a7;border-color:#00c9a7;color:#0b1120}
+.option.correct{border-color:#22c55e;background:rgba(34,197,94,.08)}
+.option.correct .marker{background:#22c55e;border-color:#22c55e;color:#fff}
+.option.wrong{border-color:#ef4444;background:rgba(239,68,68,.06)}
+.option.wrong .marker{background:#ef4444;border-color:#ef4444;color:#fff}
+.option.disabled{pointer-events:none;opacity:.7}
+.explanation{margin-top:16px;padding:14px 18px;border-radius:10px;font-size:.88rem;line-height:1.6;opacity:0;max-height:0;overflow:hidden;transition:all .4s}
+.explanation.show{opacity:1;max-height:300px;margin-top:16px}
+.explanation.correct-exp{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);color:#86efac}
+.explanation.wrong-exp{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);color:#fca5a5}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border:none;border-radius:10px;cursor:pointer;font-size:.92rem;font-weight:600;font-family:inherit;transition:all .3s}
+.btn-primary{background:linear-gradient(135deg,#00c9a7,#0ea5e9);color:#0b1120}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,201,167,.25)}
+.btn-secondary{background:#1a2540;color:#e2e8f0;border:1px solid #1e3a5f}
+.btn-secondary:hover{border-color:#00c9a7}
+.btn-center{display:flex;justify-content:center;margin-top:24px;gap:12px}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
+.results{background:#131b2e;border:1px solid #1e3a5f;border-radius:20px;padding:40px 32px;text-align:center;opacity:0;transform:scale(.95);transition:all .6s}
+.results.show{opacity:1;transform:scale(1)}
+.results .score-ring{width:140px;height:140px;margin:0 auto 24px;position:relative}
+.results .score-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.results .score-ring circle{fill:none;stroke-width:8;stroke-linecap:round}
+.results .score-ring .bg-ring{stroke:#1a2540}
+.results .score-ring .fg-ring{stroke:#00c9a7;stroke-dasharray:408;stroke-dashoffset:408;transition:stroke-dashoffset 1.5s cubic-bezier(.4,0,.2,1)}
+.results .score-ring .score-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.results .score-ring .score-num{font-size:2.2rem;font-weight:700;color:#00c9a7}
+.results .score-ring .score-label{font-size:.75rem;color:#64748b}
+.results h2{font-size:1.5rem;font-weight:700;margin-bottom:8px;color:#e2e8f0}
+.results .grade{display:inline-block;padding:6px 20px;border-radius:20px;font-weight:700;font-size:.85rem;margin:10px 0 16px;letter-spacing:.04em}
+.grade-a{background:rgba(34,197,94,.15);color:#22c55e}
+.grade-b{background:rgba(14,165,233,.15);color:#0ea5e9}
+.grade-c{background:rgba(245,158,11,.15);color:#f59e0b}
+.grade-f{background:rgba(239,68,68,.12);color:#ef4444}
+.results p{color:#64748b;font-size:.92rem;line-height:1.6;max-width:480px;margin:0 auto 24px}
+.suggest-box{background:#1a2540;border:1px solid #1e3a5f;border-radius:12px;padding:20px;margin:20px auto;max-width:500px;text-align:left}
+.suggest-box h4{color:#f59e0b;font-size:.85rem;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.suggest-box a{color:#00c9a7;text-decoration:none;font-size:.88rem;display:block;padding:4px 0;transition:color .2s}
+.suggest-box a:hover{color:#0ea5e9}
+.suggest-box .course-item{padding:10px 0;border-bottom:1px solid #1e3a5f}
+.suggest-box .course-item:last-child{border:none}
+.suggest-box .course-title{font-weight:600;font-size:.9rem;color:#e2e8f0}
+.suggest-box .course-provider{font-size:.78rem;color:#64748b;margin-top:2px}
+.cert-preview{background:#fff;color:#1a1a2e;border-radius:12px;padding:40px;margin:24px auto;max-width:650px;text-align:center;position:relative;overflow:hidden}
+.cert-preview::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,#00c9a7,#0ea5e9,#00c9a7)}
+.cert-preview::after{content:'';position:absolute;bottom:0;left:0;right:0;height:6px;background:linear-gradient(90deg,#00c9a7,#0ea5e9,#00c9a7)}
+.cert-preview .cert-border{border:2px solid #e0e0e0;border-radius:8px;padding:30px 24px;position:relative}
+.cert-preview .cert-logo{font-size:32px;margin-bottom:6px}
+.cert-preview .cert-title{font-size:1.4rem;font-weight:700;color:#0b1120;margin:10px 0 4px;letter-spacing:.02em}
+.cert-preview .cert-sub{font-size:.78rem;color:#64748b;text-transform:uppercase;letter-spacing:.12em;margin-bottom:20px}
+.cert-preview .cert-name{font-size:1.6rem;font-weight:700;color:#00c9a7;margin:10px 0;font-style:italic;border-bottom:2px solid #00c9a7;display:inline-block;padding-bottom:4px}
+.cert-name-input{background:transparent;border:none;border-bottom:2px dashed #1e3a5f;color:#e2e8f0;font-size:1rem;padding:8px 4px;width:100%;max-width:300px;text-align:center;font-family:inherit;outline:none;margin:10px auto;display:block}
+.cert-name-input:focus{border-color:#00c9a7}
+.cert-preview .cert-score{font-size:.9rem;color:#475569;margin:12px 0}
+.cert-preview .cert-date{font-size:.8rem;color:#94a3b8}
+.cert-preview .cert-seal{margin-top:16px;font-size:1.8rem}
+.welcome{text-align:center;padding:20px 0}
+.welcome .emoji-row{font-size:2.4rem;margin-bottom:20px;letter-spacing:8px}
+.welcome .info-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0;text-align:left}
+.welcome .info-card{background:#1a2540;border:1px solid #1e3a5f;border-radius:12px;padding:16px}
+.welcome .info-card .ic-icon{font-size:1.3rem;margin-bottom:6px}
+.welcome .info-card .ic-title{font-size:.82rem;font-weight:600;color:#e2e8f0;margin-bottom:4px}
+.welcome .info-card .ic-desc{font-size:.78rem;color:#64748b;line-height:1.5}
+@media(max-width:500px){.welcome .info-cards{grid-template-columns:1fr}.quiz-screen .container{padding:14px}.q-header h1{font-size:1.3rem}.question-card{padding:22px 18px}.cert-preview{padding:24px 16px}.cert-preview .cert-border{padding:20px 14px}}
+.hidden{display:none!important}
+@media print{body{background:#fff!important}.hack-screen,.reveal-screen,.quiz-screen>*:not(.cert-print){display:none!important}.cert-print{display:block!important}}
+</style>
 </head>
-<body><!-- ============ HACK SCREEN ============ -->
-<div class="hack-screen" id="hackScreen"><canvas class="matrix-bg" id="matrix"></canvas>
-<div class="skull">💀</div>
+<body>
 
-<h1 class="hack-title">YOU ARE HACKED!</h1>
-
-<div class="hack-sub">&gt;&gt; CRITICAL SYSTEM BREACH DETECTED &lt;&lt;</div>
-
-<div class="warning-banner">⚠ ALL YOUR FILES HAVE BEEN ENCRYPTED ⚠</div>
-
-<div class="terminal">
-<div class="terminal-header">root@compromised:~# system_status</div>
-
-<div class="terminal-line"><span class="red">[ERROR]</span> <span class="white">Unauthorized access detected from IP 185.220.xx.xx</span></div>
-
-<div class="terminal-line"><span class="red">[CRITICAL]</span> <span class="white">Webcam access: </span><span class="yellow">ACTIVE</span></div>
-
-<div class="terminal-line"><span class="red">[CRITICAL]</span> <span class="white">Microphone access: </span><span class="yellow">ACTIVE</span></div>
-
-<div class="terminal-line"><span class="red">[ALERT]</span> <span class="white">Banking credentials: </span><span class="yellow">STOLEN</span></div>
-
-<div class="terminal-line"><span class="red">[ALERT]</span> <span class="white">Browser passwords: </span><span class="yellow">EXFILTRATED</span></div>
-
-<div class="terminal-line"><span class="red">[ALERT]</span> <span class="white">Company files: </span><span class="yellow">ENCRYPTED</span></div>
-
-<div class="terminal-line"><span class="red">[WARNING]</span> <span class="white">Contact will be made to everyone in your contact list</span></div>
-
-<div class="terminal-line"><span class="yellow">&gt;&gt; Pay 0.5 BTC within <span id="fakeCountdown">05:00</span> to restore access &lt;&lt;</span></div>
-
-<div class="terminal-line"><span class="red">&gt;_</span></div>
+<!-- ============ HACK SCREEN ============ -->
+<div class="hack-screen" id="hackScreen">
+  <canvas class="matrix-bg" id="matrix"></canvas>
+  <div class="skull">💀</div>
+  <h1 class="hack-title">YOU ARE HACKED!</h1>
+  <div class="hack-sub">&gt;&gt; CRITICAL SYSTEM BREACH DETECTED &lt;&lt;</div>
+  <div class="warning-banner">⚠ ALL YOUR FILES HAVE BEEN ENCRYPTED ⚠</div>
+  <div class="terminal">
+    <div class="terminal-header">root@compromised:~# system_status</div>
+    <div class="terminal-line"><span class="red">[ERROR]</span> <span class="white">Unauthorized access detected from IP 185.220.xx.xx</span></div>
+    <div class="terminal-line"><span class="red">[CRITICAL]</span> <span class="white">Webcam access: </span><span class="yellow">ACTIVE</span></div>
+    <div class="terminal-line"><span class="red">[CRITICAL]</span> <span class="white">Microphone access: </span><span class="yellow">ACTIVE</span></div>
+    <div class="terminal-line"><span class="red">[ALERT]</span> <span class="white">Banking credentials: </span><span class="yellow">STOLEN</span></div>
+    <div class="terminal-line"><span class="red">[ALERT]</span> <span class="white">Browser passwords: </span><span class="yellow">EXFILTRATED</span></div>
+    <div class="terminal-line"><span class="red">[ALERT]</span> <span class="white">Company files: </span><span class="yellow">ENCRYPTED</span></div>
+    <div class="terminal-line"><span class="red">[WARNING]</span> <span class="white">Contact will be made to everyone in your contact list</span></div>
+    <div class="terminal-line"><span class="yellow">&gt;&gt; Pay 0.5 BTC within <span id="fakeCountdown">05:00</span> to restore access &lt;&lt;</span></div>
+    <div class="terminal-line"><span class="red">&gt;_</span> <span class="cursor"></span></div>
+  </div>
+  <div class="fake-action">
+    <button class="btn-fake" onclick="revealTruth()">🔓 UNLOCK MY SYSTEM NOW</button>
+    <button class="btn-fake" onclick="revealTruth()">💳 PAY RANSOM</button>
+  </div>
+  <div class="fake-timer">⏱ TIME REMAINING: <span id="visibleTimer">04:59</span></div>
 </div>
 
-<div class="fake-action"><button class="btn-fake" onclick="revealTruth()">🔓 UNLOCK MY SYSTEM NOW</button><button class="btn-fake" onclick="revealTruth()">💳 PAY RANSOM</button></div>
-
-<div class="fake-timer">⏱ TIME REMAINING: <span id="visibleTimer">04:59</span></div>
-</div>
 <!-- ============ REVEAL SCREEN ============ -->
-
 <div class="reveal-screen" id="revealScreen">
-<div class="gotcha-badge">GOTCHA! / හසු වුණා!</div>
-
-<div class="reveal-container">
-<div class="relief-icon">😅</div>
-
-<h1 class="reveal-title">Relax &mdash; You&#39;re Safe.</h1>
-
-<h2 class="reveal-title-si">බය වෙන්න එපා &mdash; ඔබ ආරක්ෂිතයි.</h2>
-
-<div class="reveal-card">
-<h3>🎯 This Was a Phishing Awareness Test <span class="si-label">/ මෙය phishing පුහුණුවක්</span></h3>
-
-<p>Nothing was hacked. Your device is fine. This page was sent by <strong>C Four Industries (Pvt) Ltd</strong> as part of our staff cybersecurity awareness programme.</p>
-
-<p class="si-text">කිසිවක් hack වී නෑ. ඔබේ උපාංගය ආරක්ෂිතයි. මෙම page එක <strong>C Four Industries (Pvt) Ltd</strong> විසින් කාර්ය මණ්ඩල සයිබර් ආරක්ෂණ දැනුවත් කිරීමේ වැඩසටහනේ කොටසක් ලෙස එවන ලදී.</p>
+  <div class="gotcha-badge">GOTCHA! / හසු වුණා!</div>
+  <div class="reveal-container">
+    <div class="relief-icon">😅</div>
+    <h1 class="reveal-title">Relax &mdash; You're Safe.</h1>
+    <h2 class="reveal-title-si">බය වෙන්න එපා &mdash; ඔබ ආරක්ෂිතයි.</h2>
+    <div class="reveal-card">
+      <h3>🎯 This Was a Phishing Awareness Test <span class="si-label">/ මෙය phishing පුහුණුවක්</span></h3>
+      <p>Nothing was hacked. Your device is fine. This page was sent by <strong>C Four Industries (Pvt) Ltd</strong> as part of our staff cybersecurity awareness programme.</p>
+      <p class="si-text">කිසිවක් hack වී නෑ. ඔබේ උපාංගය ආරක්ෂිතයි. මෙම page එක <strong>C Four Industries (Pvt) Ltd</strong> විසින් කාර්ය මණ්ඩල සයිබර් ආරක්ෂණ දැනුවත් කිරීමේ වැඩසටහනේ කොටසක් ලෙස එවන ලදී.</p>
+    </div>
+    <div class="reveal-card">
+      <h3>⚠ How to Spot Messages Like This <span class="si-label">/ මේවා හඳුනාගන්නේ මෙහෙමයි</span></h3>
+      <div class="signs-grid">
+        <div class="sign-item"><strong>Panic &amp; Urgency</strong>Countdown timers, "act now or lose everything"<span class="si">භීතිය සහ හදිසිය - "දැන්ම කරන්න නැත්නම් සියල්ල නැති වේ"</span></div>
+        <div class="sign-item"><strong>Scary Claims</strong>Webcam hacked, all passwords stolen, bitcoin demands<span class="si">බියකරු ප්‍රකාශ - webcam hack, මුරපද සොරාගෙන, bitcoin ඉල්ලීම්</span></div>
+        <div class="sign-item"><strong>Suspicious Buttons</strong>"Unlock now", "Pay ransom", "Click here to fix"<span class="si">සැක සහිත buttons - "දැන් unlock කරන්න", "Pay කරන්න"</span></div>
+        <div class="sign-item"><strong>Unknown Sender</strong>Emails, SMS, or popups from people you don't know<span class="si">නොදන්නා ප්‍රේෂකයන් - නොදන්නා emails, SMS, popups</span></div>
+      </div>
+    </div>
+    <div class="reveal-card">
+      <h3>✅ What You Should Actually Do <span class="si-label">/ සැබවින්ම කළ යුතු දේ</span></h3>
+      <ul class="rules-list">
+        <li>Do NOT click any links or buttons in messages like this<span class="si-rule">මෙවැනි පණිවිඩවල links හෝ buttons ක්ලික් කරන්න එපා</span></li>
+        <li>Close the page or tab immediately<span class="si-rule">Page එක හෝ tab එක වහාම වසන්න</span></li>
+        <li>Do NOT enter passwords, card details, or personal info<span class="si-rule">මුරපද, card විස්තර හෝ පෞද්ගලික තොරතුරු ඇතුළත් කරන්න එපා</span></li>
+        <li>Report the message to IT / your manager straight away<span class="si-rule">පණිවිඩය IT හෝ ඔබේ manager ට වහාම වාර්තා කරන්න</span></li>
+        <li>If unsure, check with IT by phone or in person &mdash; not by replying to the suspicious message<span class="si-rule">සැකයක් නම්, සැක සහිත පණිවිඩයට reply කරන්නේ නැතිව, දුරකතනයෙන් හෝ පෞද්ගලිකව IT සමඟ තහවුරු කරගන්න</span></li>
+      </ul>
+    </div>
+    <div class="reveal-card" style="background:rgba(0,201,167,.08);border-color:rgba(0,201,167,.3)">
+      <h3 style="color:#22c55e">💡 Remember <span class="si-label" style="color:#22c55e">/ මතක තබාගන්න</span></h3>
+      <p>Real hackers don't warn you with a dramatic countdown. Real ransomware doesn't have a "Pay" button that looks like a free Vercel page. If something feels designed to scare you into clicking &mdash; that's exactly why you shouldn't click.</p>
+      <p class="si-text">සැබෑ hackers නාටකාකාර countdown එකකින් ඔබට අනතුරු අඟවන්නේ නෑ. සැබෑ ransomware වල නොමිලේ Vercel page එකක් වගේ "Pay" button එකක් නෑ. යමක් ඔබව බියට පත් කර ක්ලික් කරවන්න නිර්මාණය කර ඇති බව දැනෙනවා නම් &mdash; ඒකයි හරියටම ඔබ ක්ලික් නොකළ යුතු හේතුව.</p>
+    </div>
+    <div class="cta-section">
+      <button class="btn-training" onclick="goToTraining()">🎓 Take the 10-Minute Training &rarr;</button>
+      <p>Quick quiz, scenario-based, available in English &amp; සිංහල<span class="si">ඉක්මන් quiz එකක්, අවස්ථා මත පදනම්, English සහ සිංහල භාෂා දෙකෙන්ම ඇත</span></p>
+      <div class="company-tag">C Four Industries (Pvt) Ltd &mdash; Security Awareness</div>
+    </div>
+  </div>
 </div>
 
-<div class="reveal-card">
-<h3>⚠ How to Spot Messages Like This <span class="si-label">/ මේවා හඳුනාගන්නේ මෙහෙමයි</span></h3>
-
-<div class="signs-grid">
-<div class="sign-item"><strong>Panic &amp; Urgency</strong> Countdown timers, &quot;act now or lose everything&quot; <span class="si">භීතිය සහ හදිසිය - &quot;දැන්ම කරන්න නැත්නම් සියල්ල නැති වේ&quot;</span></div>
-
-<div class="sign-item"><strong>Scary Claims</strong> Webcam hacked, all passwords stolen, bitcoin demands <span class="si">බියකරු ප්&zwj;රකාශ - webcam hack, මුරපද සොරාගෙන, bitcoin ඉල්ලීම්</span></div>
-
-<div class="sign-item"><strong>Suspicious Buttons</strong> &quot;Unlock now&quot;, &quot;Pay ransom&quot;, &quot;Click here to fix&quot; <span class="si">සැක සහිත buttons - &quot;දැන් unlock කරන්න&quot;, &quot;Pay කරන්න&quot;</span></div>
-
-<div class="sign-item"><strong>Unknown Sender</strong> Emails, SMS, or popups from people you don&#39;t know <span class="si">නොදන්නා ප්&zwj;රේෂකයන් - නොදන්නා emails, SMS, popups</span></div>
+<!-- ============ QUIZ SCREEN ============ -->
+<div class="quiz-screen" id="quizScreen">
+  <div class="container">
+    <div class="lang-bar">
+      <button class="active" id="btn-en" onclick="setLang('en')">English</button>
+      <button id="btn-si" onclick="setLang('si')">සිංහල</button>
+    </div>
+    <div class="q-header">
+      <div class="shield">🛡️</div>
+      <h1 id="main-title">Cybersecurity Awareness Assessment</h1>
+      <p id="main-desc">Test your knowledge on phishing, password security, and safe digital practices. Complete all questions to receive your grade and certificate.</p>
+      <div class="company">C Four Industries (Pvt) Ltd</div>
+    </div>
+    <div class="welcome" id="welcome-screen">
+      <div class="emoji-row">🎯 🔐 📧</div>
+      <div class="info-cards">
+        <div class="info-card"><div class="ic-icon">📝</div><div class="ic-title" data-en="10 Questions" data-si="ප්‍රශ්න 10 ක්">10 Questions</div><div class="ic-desc" data-en="Scenario-based multiple choice" data-si="අවස්ථා මත පදනම් බහුවරණ">Scenario-based multiple choice</div></div>
+        <div class="info-card"><div class="ic-icon">⏱️</div><div class="ic-title" data-en="~10 Minutes" data-si="~විනාඩි 10 ක්">~10 Minutes</div><div class="ic-desc" data-en="Take your time, no rush" data-si="ඉක්මන් වෙන්න ඕන නෑ">Take your time, no rush</div></div>
+        <div class="info-card"><div class="ic-icon">🏆</div><div class="ic-title" data-en="Get Graded" data-si="ශ්‍රේණිගත වන්න">Get Graded</div><div class="ic-desc" data-en="A, B, C, or Needs Improvement" data-si="A, B, C, හෝ වැඩිදියුණු කළ යුතුයි">A, B, C, or Needs Improvement</div></div>
+        <div class="info-card"><div class="ic-icon">📜</div><div class="ic-title" data-en="Certificate" data-si="සහතිකය">Certificate</div><div class="ic-desc" data-en="Download your completion certificate" data-si="ඔබේ සම්පූර්ණ කිරීමේ සහතිකය download කරන්න">Download your completion certificate</div></div>
+      </div>
+      <div class="btn-center" style="margin-top:30px"><button class="btn btn-primary" id="start-btn" onclick="startQuiz()"><span data-en="Start Assessment" data-si="තක්සේරුව ආරම්භ කරන්න">Start Assessment</span> →</button></div>
+    </div>
+    <div class="progress-wrap" id="progress-wrap">
+      <div class="progress-info"><span data-en="Question" data-si="ප්‍රශ්නය" id="prog-label">Question</span><span id="prog-count">1/10</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+    <div class="hidden" id="quiz-area"></div>
+    <div class="btn-center hidden" id="nav-btns">
+      <button class="btn btn-secondary" disabled id="prev-btn" onclick="prevQ()">← <span data-en="Previous" data-si="පෙර">Previous</span></button>
+      <button class="btn btn-primary" id="next-btn" onclick="nextQ()"><span data-en="Next" data-si="ඊළඟ" id="next-text">Next</span> →</button>
+    </div>
+    <div class="hidden" id="results-area"></div>
+  </div>
 </div>
-</div>
 
-<div class="reveal-card">
-<h3>✅ What You Should Actually Do <span class="si-label">/ සැබවින්ම කළ යුතු දේ</span></h3>
-
-<ul class="rules-list">
-	<li>Do NOT click any links or buttons in messages like this <span class="si-rule">මෙවැනි පණිවිඩවල links හෝ buttons ක්ලික් කරන්න එපා</span></li>
-	<li>Close the page or tab immediately <span class="si-rule">Page එක හෝ tab එක වහාම වසන්න</span></li>
-	<li>Do NOT enter passwords, card details, or personal info <span class="si-rule">මුරපද, card විස්තර හෝ පෞද්ගලික තොරතුරු ඇතුළත් කරන්න එපා</span></li>
-	<li>Report the message to IT / your manager straight away <span class="si-rule">පණිවිඩය IT හෝ ඔබේ manager ට වහාම වාර්තා කරන්න</span></li>
-	<li>If unsure, check with IT by phone or in person &mdash; not by replying to the suspicious message <span class="si-rule">සැකයක් නම්, සැක සහිත පණිවිඩයට reply කරන්නේ නැතිව, දුරකතනයෙන් හෝ පෞද්ගලිකව IT සමඟ තහවුරු කරගන්න</span></li>
-</ul>
-</div>
-
-<div class="reveal-card" style="background:rgba(0,201,167,.08);border-color:rgba(0,201,167,.3)">
-<h3 style="color:#22c55e">💡 Remember <span class="si-label" style="color:#22c55e">/ මතක තබාගන්න</span></h3>
-
-<p>Real hackers don&#39;t warn you with a dramatic countdown. Real ransomware doesn&#39;t have a &quot;Pay&quot; button that looks like a free Vercel page. If something feels designed to scare you into clicking &mdash; that&#39;s exactly why you shouldn&#39;t click.</p>
-
-<p class="si-text">සැබෑ hackers නාටකාකාර countdown එකකින් ඔබට අනතුරු අඟවන්නේ නෑ. සැබෑ ransomware වල නොමිලේ Vercel page එකක් වගේ &quot;Pay&quot; button එකක් නෑ. යමක් ඔබව බියට පත් කර ක්ලික් කරවන්න නිර්මාණය කර ඇති බව දැනෙනවා නම් &mdash; ඒකයි හරියටම ඔබ ක්ලික් නොකළ යුතු හේතුව.</p>
-</div>
-
-<div class="cta-section"><button class="btn-training" onclick="goToTraining()">🎓 Take the 10-Minute Training &rarr;</button>
-
-<p>Quick quiz, scenario-based, available in English &amp; සිංහල <span class="si">ඉක්මන් quiz එකක්, අවස්ථා මත පදනම්, English සහ සිංහල භාෂා දෙකෙන්ම ඇත</span></p>
-
-<div class="company-tag">C Four Industries (Pvt) Ltd &mdash; Security Awareness</div>
-</div>
-</div>
-</div>
 <script>
-// ============ MATRIX RAIN EFFECT ============
+// ============ MATRIX RAIN ============
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
-function resizeCanvas(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
-
 const matrixChars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホ!@#$%^&*()_+-={}[]|:;<>,.?/~`';
 const fontSize = 14;
 const columns = Math.floor(canvas.width / fontSize);
 const drops = Array(columns).fill(1);
-
 function drawMatrix(){
-  ctx.fillStyle = 'rgba(0,0,0,0.08)';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = '#ff0033';
-  ctx.font = fontSize + 'px monospace';
-  for(let i = 0; i < drops.length; i++){
-    const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-    if(drops[i] * fontSize > canvas.height && Math.random() > 0.975){
-      drops[i] = 0;
-    }
+  ctx.fillStyle='rgba(0,0,0,0.08)';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='#ff0033';
+  ctx.font=fontSize+'px monospace';
+  for(let i=0;i<drops.length;i++){
+    const text=matrixChars[Math.floor(Math.random()*matrixChars.length)];
+    ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+    if(drops[i]*fontSize>canvas.height&&Math.random()>0.975)drops[i]=0;
     drops[i]++;
   }
 }
-let matrixInterval = setInterval(drawMatrix, 50);
+let matrixInterval=setInterval(drawMatrix,50);
 
 // ============ FAKE COUNTDOWN ============
-let fakeSeconds = 299; // 4:59
-const fakeEl = document.getElementById('fakeCountdown');
-const visibleEl = document.getElementById('visibleTimer');
+let fakeSeconds=299;
+const fakeEl=document.getElementById('fakeCountdown');
+const visibleEl=document.getElementById('visibleTimer');
 function updateFakeTimer(){
-  const m = String(Math.floor(fakeSeconds / 60)).padStart(2, '0');
-  const s = String(fakeSeconds % 60).padStart(2, '0');
-  const t = m + ':' + s;
-  if(fakeEl) fakeEl.textContent = t;
-  if(visibleEl) visibleEl.textContent = t;
-  if(fakeSeconds > 0) fakeSeconds--;
+  const m=String(Math.floor(fakeSeconds/60)).padStart(2,'0');
+  const s=String(fakeSeconds%60).padStart(2,'0');
+  const t=m+':'+s;
+  if(fakeEl)fakeEl.textContent=t;
+  if(visibleEl)visibleEl.textContent=t;
+  if(fakeSeconds>0)fakeSeconds--;
 }
-let timerInterval = setInterval(updateFakeTimer, 1000);
+let timerInterval=setInterval(updateFakeTimer,1000);
 
 // ============ REVEAL TRIGGER ============
 function revealTruth(){
-  // Stop effects
   clearInterval(matrixInterval);
   clearInterval(timerInterval);
-
-  // Hide hack screen, show reveal
-  const hack = document.getElementById('hackScreen');
-  const reveal = document.getElementById('revealScreen');
-
-  hack.style.transition = 'opacity .4s';
-  hack.style.opacity = '0';
-
-  setTimeout(() => {
-    hack.style.display = 'none';
+  const hack=document.getElementById('hackScreen');
+  const reveal=document.getElementById('revealScreen');
+  hack.style.transition='opacity .4s';
+  hack.style.opacity='0';
+  setTimeout(()=>{
+    hack.style.display='none';
     reveal.classList.add('show');
-    window.scrollTo({top: 0, behavior: 'smooth'});
-  }, 400);
+    window.scrollTo({top:0,behavior:'smooth'});
+  },400);
 }
 
-// ============ GO TO TRAINING ============
-// Replace this URL with your actual training quiz page URL
-const TRAINING_URL = 'https://c-four-employees-training.vercel.app/';
-
+// ============ GO TO TRAINING (INTERNAL) ============
 function goToTraining(){
-  window.location.href = TRAINING_URL;
+  const reveal=document.getElementById('revealScreen');
+  const quiz=document.getElementById('quizScreen');
+  reveal.style.transition='opacity .4s';
+  reveal.style.opacity='0';
+  setTimeout(()=>{
+    reveal.style.display='none';
+    reveal.classList.remove('show');
+    quiz.classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  },400);
 }
 
-// ============ PREVENT BACK BUTTON ESCAPE (optional realism) ============
-// Block right-click on hack screen for extra "scary" feel
-document.getElementById('hackScreen').addEventListener('contextmenu', function(e){
-  e.preventDefault();
-});
+document.getElementById('hackScreen').addEventListener('contextmenu',function(e){e.preventDefault()});
 
-// ============ AUTO-REVEAL AFTER 30s (safety net) ============
-// If user just stares at it without clicking, reveal after 30s so we don't leave them scared
-setTimeout(() => {
-  const hack = document.getElementById('hackScreen');
-  if(hack && hack.style.display !== 'none'){
-    revealTruth();
+// Auto-reveal after 30s safety net
+setTimeout(()=>{
+  const hack=document.getElementById('hackScreen');
+  if(hack&&hack.style.display!=='none')revealTruth();
+},30000);
+
+// ============ QUIZ LOGIC ============
+let lang='en';
+const T={
+  en:{title:"Cybersecurity Awareness Assessment",desc:"Test your knowledge on phishing, password security, and safe digital practices. Complete all questions to receive your grade and certificate.",question:"Question",prev:"Previous",next:"Next",finish:"View Results",scenario:"SCENARIO",correct:"✓ Correct!",wrong:"✗ Incorrect",resultTitle:"Assessment Complete!",yourGrade:"Your Grade",scoreOf:"out of 10",gradeA:"Excellent! You have strong cybersecurity awareness.",gradeB:"Good job! You have solid knowledge with some areas to strengthen.",gradeC:"Fair. Review the topics you missed and consider additional training.",gradeF:"Needs improvement. We strongly recommend completing the free courses below.",suggestTitle:"⚠ Recommended Free Courses",certTitle:"CERTIFICATE OF COMPLETION",certSub:"Cybersecurity Awareness Training",certAwarded:"This certifies that",certScore:"achieved a score of",certDate:"Date of Completion",enterName:"Enter your full name...",downloadCert:"Download Certificate",retake:"Retake Assessment",printCert:"Print Certificate"},
+  si:{title:"සයිබර් ආරක්ෂාව දැනුවත් කිරීමේ තක්සේරුව",desc:"Phishing, මුරපද ආරක්ෂාව සහ ආරක්ෂිත ඩිජිටල් පුරුදු පිළිබඳ ඔබේ දැනුම පරීක්ෂා කරන්න. සෑම ප්‍රශ්නයකටම පිළිතුරු දී ඔබේ ශ්‍රේණිය සහ සහතිකය ලබාගන්න.",question:"ප්‍රශ්නය",prev:"පෙර",next:"ඊළඟ",finish:"ප්‍රතිඵල බලන්න",scenario:"අවස්ථාව",correct:"✓ නිවැරදියි!",wrong:"✗ වැරදියි",resultTitle:"තක්සේරුව සම්පූර්ණයි!",yourGrade:"ඔබේ ශ්‍රේණිය",scoreOf:"10 න්",gradeA:"විශිෂ්ටයි! ඔබට ශක්තිමත් සයිබර් ආරක්ෂණ දැනුමක් ඇත.",gradeB:"හොඳයි! ඔබට හොඳ දැනුමක් ඇත. තව ටිකක් වැඩිදියුණු කළ හැක.",gradeC:"සාමාන්‍යයි. ඔබ මග හැරි මාතෘකා සමාලෝචනය කර අමතර පුහුණුවක් ලබාගන්න.",gradeF:"වැඩිදියුණු කළ යුතුයි. පහත නොමිලේ පාඨමාලා සම්පූර්ණ කිරීම තරයේ නිර්දේශ කරමු.",suggestTitle:"⚠ නිර්දේශිත නොමිලේ පාඨමාලා",certTitle:"සම්පූර්ණ කිරීමේ සහතිකය",certSub:"සයිබර් ආරක්ෂාව දැනුවත් කිරීමේ පුහුණුව",certAwarded:"මෙයින් සහතික කරනු ලබන්නේ",certScore:"ලබාගත් ලකුණු",certDate:"සම්පූර්ණ කළ දිනය",enterName:"ඔබේ සම්පූර්ණ නම ලියන්න...",downloadCert:"සහතිකය Download කරන්න",retake:"නැවත තක්සේරුව කරන්න",printCert:"සහතිකය Print කරන්න"}
+};
+
+const questions=[
+  {en:{scenario:"You receive an email from 'IT Support <support@cfour-industries.net>' asking you to click a link to reset your password because of a 'security upgrade'. The email says you must do this within 2 hours or your account will be locked.",question:"What should you do?",options:["Click the link immediately — you don't want to lose access","Reply to the email asking if it's real","Do NOT click. Contact IT directly through a known phone number or in person to verify","Forward the email to your personal email to check later"],correct:2,explanation:"Never click links in unexpected emails. Verify directly with IT using a known contact method. Urgency and threats are classic phishing tactics."},si:{scenario:"ඔබට 'IT Support <support@cfour-industries.net>' වෙතින් email එකක් ලැබෙනවා, 'ආරක්ෂණ උත්ශ්‍රේණිගත කිරීමක්' නිසා ඔබේ මුරපදය reset කිරීමට link එකක් ක්ලික් කරන්න කියලා. පැය 2ක් ඇතුළත නොකළොත් ගිණුම අගුළු වේ කියලා.",question:"ඔබ කුමක් කළ යුතුද?",options:["වහාම link ක්ලික් කරන්න — ප්‍රවේශය නැති වෙන්න බෑ","මේ සැබෑද කියලා email එකට reply කරන්න","ක්ලික් නොකරන්න. දන්නා දුරකතන අංකයකින් හෝ පෞද්ගලිකව IT අමතා තහවුරු කරන්න","පසුව බලන්න පෞද්ගලික email එකට forward කරන්න"],correct:2,explanation:"අනපේක්ෂිත email වල links ක්ලික් කරන්න එපා. දැන සිටින සම්බන්ධතා ක්‍රමයකින් IT සමඟ සෘජුව සත්‍යාපනය කරන්න. හදිසිබව සහ තර්ජන Phishing හි සම්භාව්‍ය ක්‍රම වේ."}},
+  {en:{question:"Which of these is the STRONGEST password?",options:["Cfour2024!","P@ssw0rd","BlueMango$Flies!2024","admin123"],correct:2,explanation:"'BlueMango$Flies!2024' is a passphrase — long (20+ characters), mixes cases, numbers, and symbols, and isn't based on dictionary words or personal info."},si:{question:"මෙයින් ශක්තිමත්ම මුරපදය කුමක්ද?",options:["Cfour2024!","P@ssw0rd","BlueMango$Flies!2024","admin123"],correct:2,explanation:"'BlueMango$Flies!2024' passphrase එකකි — දිගු (අක්ෂර 20+), ලොකු/කුඩා, ඉලක්කම්, සංකේත මිශ්‍ර වූ, ශබ්දකෝෂ වචන මත පදනම් නොවූ."}},
+  {en:{scenario:"A colleague walks over to your desk and says: 'Hey, I forgot my password. Can you share your login so I can access the production schedule? It's urgent.'",question:"What is the correct response?",options:["Share your password since it's a trusted colleague","Give them your password but ask them to change it after","Politely refuse and suggest they contact IT to reset their own password","Write down your password on a sticky note for them"],correct:2,explanation:"Never share your credentials with anyone — not even colleagues. Direct them to IT for a password reset. Password sharing violates security policy and makes you accountable for their actions."},si:{scenario:"සගයෙකු ඔබේ මේසයට ඇවිත් කියයි: 'මගේ මුරපදය අමතක වුණා. නිෂ්පාදන කාලසටහනට ප්‍රවේශ වෙන්න ඔබේ login එක දෙන්නකෝ. හදිසියි.'",question:"නිවැරදි ප්‍රතිචාරය කුමක්ද?",options:["විශ්වාසනීය සගයෙක් නිසා මුරපදය දෙන්න","මුරපදය දෙන්න, ඒත් පසුව වෙනස් කරන්න කියන්න","ආචාරශීලීව ප්‍රතික්ෂේප කර, IT අමතා මුරපදය reset කරගන්න යෝජනා කරන්න","Sticky note එකක මුරපදය ලියා දෙන්න"],correct:2,explanation:"ඔබේ ගිණුම් තොරතුරු කිසිවෙකුට නොදෙන්න — සගයන්ටත්. IT කණ්ඩායමෙන් මුරපදය reset කරගන්න යොමු කරන්න."}},
+  {en:{scenario:"You find a USB drive in the office parking lot labelled 'Payroll 2024 — Confidential'.",question:"What should you do?",options:["Plug it into your laptop to check if it belongs to someone in the office","Plug it into a company computer — it might have important payroll data","Do NOT plug it in. Hand it to the IT team and report where you found it","Take it home and check it on your personal computer"],correct:2,explanation:"Unknown USB drives can contain malware that installs automatically when plugged in. This is a well-known attack called a 'USB drop'. Always hand unknown drives to IT."},si:{scenario:"ඔබට කාර්යාල ගාල් කිරීමේ ස්ථානයේ 'Payroll 2024 — Confidential' ලෙස ලේබල් කළ USB drive එකක් හමුවේ.",question:"ඔබ කුමක් කළ යුතුද?",options:["කාර්යාලයේ කෙනෙකුගේද බලන්න ලැප්ටොප් එකට ඇතුළු කරන්න","සමාගම් පරිගණකයට ඇතුළු කරන්න — වැදගත් payroll දත්ත තිබිය හැක","ඇතුළු නොකරන්න. IT කණ්ඩායමට භාර දී, හමු වූ ස්ථානය වාර්තා කරන්න","ගෙදර ගෙනගොස් පෞද්ගලික පරිගණකයෙන් බලන්න"],correct:2,explanation:"නොදන්නා USB drives වල malware අඩංගු විය හැක — ඇතුළු කළ වහාම ස්වයංක්‍රීයව install වේ. මෙය 'USB drop' ලෙස හඳුන්වන සුපරිචිත ප්‍රහාරයකි."}},
+  {en:{question:"What does MFA (Multi-Factor Authentication) protect against?",options:["Viruses on your computer","Someone logging into your account even if they have your password","Spam emails in your inbox","Slow internet connection"],correct:1,explanation:"MFA adds a second verification step (like a phone code) beyond your password. Even if an attacker steals your password, they cannot log in without the second factor."},si:{question:"MFA (Multi-Factor Authentication) ආරක්ෂා කරන්නේ කුමකින්ද?",options:["ඔබේ පරිගණකයේ virus වලින්","ඔබේ මුරපදය ලැබුණත් ගිණුමට ඇතුළු වීමෙන්","Inbox එකේ spam emails වලින්","මන්දගාමී අන්තර්ජාල සම්බන්ධතාවයෙන්"],correct:1,explanation:"MFA ඔබේ මුරපදයට අමතරව දෙවන සත්‍යාපන පියවරක් (දුරකතන code) එකතු කරයි. ප්‍රහාරකයාට මුරපදය ලැබුණත්, දෙවන සාධකය නොමැතිව ඇතුළු විය නොහැක."}},
+  {en:{scenario:"You're at a coffee shop and need to check a work order on your phone. The shop has free Wi-Fi called 'CoffeeShop_Free_WiFi'.",question:"What is the safest approach?",options:["Connect to the free Wi-Fi and log into your work account","Use your mobile data instead of the public Wi-Fi for work tasks","Connect to the Wi-Fi but only check email, not cloud storage","Ask the staff for the Wi-Fi password — that makes it safe"],correct:1,explanation:"Public Wi-Fi can be intercepted or spoofed by attackers. Use your mobile data connection for any work-related access. If you must use public Wi-Fi, use a VPN."},si:{scenario:"ඔබ කෝපි කඩයක ඉන්නවා, දුරකතනයෙන් work order එකක් බලන්න ඕන. කඩේ 'CoffeeShop_Free_WiFi' කියලා නොමිලේ Wi-Fi තියෙනවා.",question:"ආරක්ෂිතම ක්‍රමය කුමක්ද?",options:["නොමිලේ Wi-Fi එකට connect වී කාර්යාල ගිණුමට log in වන්න","කාර්යාල කටයුතු සඳහා මහජන Wi-Fi වෙනුවට ඔබේ mobile data භාවිතා කරන්න","Wi-Fi එකට connect වෙලා email පමණක් බලන්න, Cloud storage නොබලන්න","Wi-Fi password එක staff ගෙන් ඉල්ලන්න — එය ආරක්ෂිත කරයි"],correct:1,explanation:"මහජන Wi-Fi ප්‍රහාරකයන්ට අල්ලාගත හැක. කාර්යාල ප්‍රවේශය සඳහා mobile data භාවිතා කරන්න. මහජන Wi-Fi භාවිතා කළ යුතු නම් VPN යොදාගන්න."}},
+  {en:{scenario:"You receive a WhatsApp message from someone claiming to be the company's managing director: 'I need you to buy 5 Google Play gift cards worth LKR 10,000 each and send me the codes. This is confidential — don't tell anyone.'",question:"What should you do?",options:["Buy the cards immediately — the MD is asking","Ask for more details via WhatsApp before buying","Recognize this as a scam. Do NOT comply. Report it to your manager through normal channels","Buy 2 cards first as a compromise"],correct:2,explanation:"Gift card scams are extremely common. No legitimate executive will ask employees to purchase gift cards secretly. This is a social engineering attack. Always verify through official channels."},si:{scenario:"සමාගමේ කළමනාකාරී අධ්‍යක්ෂ යයි කියා කෙනෙකුගෙන් WhatsApp පණිවිඩයක් ලැබේ: 'LKR 10,000 බැගින් Google Play gift cards 5ක් මිලදී ගෙන codes මට එවන්න. මෙය රහස්‍යයි — කිසිවෙකුට කියන්න එපා.'",question:"ඔබ කුමක් කළ යුතුද?",options:["MD ඉල්ලනවා නිසා වහාම cards ගන්න","මිලට ගන්න කලින් WhatsApp හරහා තව විස්තර ඉල්ලන්න","මෙය වංචාවක් ලෙස හඳුනාගන්න. අනුකූල නොවන්න. සාමාන්‍ය නාලිකා හරහා manager ට වාර්තා කරන්න","සම්මුතියක් ලෙස cards 2 ක් පමණක් ගන්න"],correct:2,explanation:"Gift card වංචා ඉතා සුලභ ය. කිසිදු නීත්‍යානුකූල විධායකයෙක් සේවකයන්ගෙන් රහසිගතව gift cards මිලට ගන්නැයි ඉල්ලන්නේ නැත. සෑමවිටම නිල නාලිකා හරහා සත්‍යාපනය කරන්න."}},
+  {en:{question:"If your personal phone — which has work email and cloud storage access — is stolen, what should you do FIRST?",options:["Wait a day to see if it turns up","Post about it on social media","Report it to your manager immediately so IT can revoke access","Buy a new phone and set up everything again"],correct:2,explanation:"Report a lost/stolen device within 1 hour. IT can remotely revoke cloud access and change credentials before an attacker uses the device to access company data."},si:{question:"කාර්යාල email සහ Cloud ප්‍රවේශය ඇති ඔබේ පෞද්ගලික දුරකතනය සොරාගත්තොත්, ඔබ පළමුව කුමක් කළ යුතුද?",options:["හමුවෙනවාද බලන්න දවසක් ඉන්න","Social media එකේ post කරන්න","IT ට ප්‍රවේශය අවලංගු කළ හැකි ලෙස වහාම manager ට දන්වන්න","අලුත් phone එකක් ගෙන සියල්ල නැවත setup කරන්න"],correct:2,explanation:"නැති/සොරාගත් උපාංගයක් පැය 1ක් ඇතුළත වාර්තා කරන්න. ප්‍රහාරකයෙකු උපාංගය භාවිතා කිරීමට පෙර IT ට Cloud ප්‍රවේශය දුරස්ථව අවලංගු කළ හැක."}},
+  {en:{scenario:"A supplier emails you: 'Please note our bank details have changed. Use the new account below for the next payment.' The email looks normal and matches the supplier's usual format.",question:"What is the correct action?",options:["Update the bank details and process the payment","Reply to the email asking them to confirm","Call the supplier on their known phone number to verify the bank change before processing","Forward it to your personal email for review"],correct:2,explanation:"Business Email Compromise (BEC) attacks use hacked supplier emails to redirect payments. ALWAYS verify bank detail changes by calling the supplier on a known phone number — never by replying to the email."},si:{scenario:"සැපයුම්කරුවෙකුගෙන් email එකක්: 'අපේ බැංකු තොරතුරු වෙනස් වී ඇත. ඊළඟ ගෙවීමට පහත නව ගිණුම භාවිතා කරන්න.' Email එක සාමාන්‍ය පෙනුමයි, සැපයුම්කරුගේ සාමාන්‍ය format එකට ගැළපේ.",question:"නිවැරදි ක්‍රියාව කුමක්ද?",options:["බැංකු තොරතුරු යාවත්කාලීන කර ගෙවීම සකසන්න","තහවුරු කරන්න කියලා email එකට reply කරන්න","ගෙවීම සැකසීමට පෙර දන්නා දුරකතන අංකයකින් සැපයුම්කරුට ඇමතීම","සමාලෝචනය සඳහා පෞද්ගලික email එකට forward කරන්න"],correct:2,explanation:"BEC ප්‍රහාර hack කළ සැපයුම්කරු emails හරහා ගෙවීම් වෙනත් ගිණුම්වලට යොමු කරයි. බැංකු තොරතුරු වෙනස්වීම් සෑමවිටම දන්නා දුරකතන අංකයකින් ඇමතීමෙන් සත්‍යාපනය කරන්න."}},
+  {en:{question:"Which of the following is the BEST practice for your BYOD (personal) device used for work?",options:["Use the same password for work and personal accounts — easier to remember","Let family members use your work apps since they're trustworthy","Keep work and personal accounts separate, enable screen lock, and log out of work apps at end of day","Install any useful app from the internet to boost productivity"],correct:2,explanation:"BYOD devices should have: separate work/personal accounts, screen lock enabled (6-digit PIN or biometric), and you should log out of work apps when done. Family members should not access work accounts."},si:{question:"කාර්යාලය සඳහා භාවිතා කරන ඔබේ BYOD (පෞද්ගලික) උපාංගය සඳහා පහත සඳහන් කවරක් හොඳම පුරුද්දද?",options:["කාර්යාල සහ පෞද්ගලික ගිණුම් දෙකටම එකම මුරපදය භාවිතා කරන්න — මතක තබාගන්න පහසුයි","විශ්වාසදායක නිසා පවුලේ අයට ඔබේ කාර්යාල apps භාවිතා කරන්න දෙන්න","කාර්යාල/පෞද්ගලික ගිණුම් වෙන් කරන්න, screen lock සක්‍රීය කරන්න, දවස අවසානයේ log out වෙන්න","ඵලදායිතාව වැඩිකරන්න අන්තර්ජාලයෙන් ඕනෑම app එකක් install කරන්න"],correct:2,explanation:"BYOD උපාංගවල: වෙනම කාර්යාල/පෞද්ගලික ගිණුම්, screen lock (6-digit PIN හෝ biometric), සහ අවසානයේ log out වීම තිබිය යුතුයි."}}
+];
+
+let quizStarted=false;
+let currentQ=0;
+let answers=new Array(questions.length).fill(null);
+let answered=new Array(questions.length).fill(false);
+
+function setLang(l){
+  lang=l;
+  document.getElementById('btn-en').classList.toggle('active',l==='en');
+  document.getElementById('btn-si').classList.toggle('active',l==='si');
+  document.getElementById('main-title').textContent=T[l].title;
+  document.getElementById('main-desc').textContent=T[l].desc;
+  document.querySelectorAll('[data-en]').forEach(el=>{el.textContent=el.getAttribute('data-'+l)||el.getAttribute('data-en')});
+  document.getElementById('prog-label').textContent=T[l].question;
+  if(quizStarted)renderQuestion();
+}
+
+function startQuiz(){
+  quizStarted=true;
+  document.getElementById('welcome-screen').classList.add('hidden');
+  document.getElementById('quiz-area').classList.remove('hidden');
+  document.getElementById('nav-btns').classList.remove('hidden');
+  document.getElementById('progress-wrap').classList.add('show');
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const q=questions[currentQ][lang];
+  const area=document.getElementById('quiz-area');
+  let html=`<div class="question-card" id="qcard">`;
+  html+=`<div class="q-number">${T[lang].question} ${currentQ+1} / ${questions.length}</div>`;
+  if(q.scenario){html+=`<div class="q-scenario"><span class="tag">${T[lang].scenario}</span><br>${q.scenario}</div>`}
+  html+=`<div class="q-text">${q.question}</div><div class="options">`;
+  q.options.forEach((opt,i)=>{
+    let cls='option';
+    if(answered[currentQ]){
+      cls+=' disabled';
+      if(i===q.correct)cls+=' correct';
+      else if(i===answers[currentQ]&&i!==q.correct)cls+=' wrong';
+    }else if(answers[currentQ]===i){cls+=' selected'}
+    const marker=answered[currentQ]?(i===q.correct?'✓':(i===answers[currentQ]?'✗':'')):(answers[currentQ]===i?'●':'');
+    html+=`<div class="${cls}" onclick="selectOption(${i})"><span class="marker">${marker}</span><span>${opt}</span></div>`;
+  });
+  html+=`</div>`;
+  if(answered[currentQ]){
+    const isCorrect=answers[currentQ]===q.correct;
+    html+=`<div class="explanation show ${isCorrect?'correct-exp':'wrong-exp'}"><strong>${isCorrect?T[lang].correct:T[lang].wrong}</strong><br>${q.explanation}</div>`;
   }
-}, 30000);
-</script></body>
+  html+=`</div>`;
+  area.innerHTML=html;
+  requestAnimationFrame(()=>{document.getElementById('qcard').classList.add('show')});
+  document.getElementById('prog-count').textContent=`${currentQ+1}/${questions.length}`;
+  document.getElementById('progress-fill').style.width=`${((currentQ+1)/questions.length)*100}%`;
+  document.getElementById('prev-btn').disabled=currentQ===0;
+  const nextText=document.getElementById('next-text');
+  if(currentQ===questions.length-1&&answered.every(a=>a)){nextText.textContent=T[lang].finish}
+  else{nextText.textContent=T[lang].next}
+}
+
+function selectOption(i){
+  if(answered[currentQ])return;
+  answers[currentQ]=i;
+  answered[currentQ]=true;
+  renderQuestion();
+}
+
+function nextQ(){
+  if(currentQ===questions.length-1&&answered.every(a=>a)){showResults();return}
+  if(currentQ<questions.length-1){currentQ++;renderQuestion()}
+}
+
+function prevQ(){if(currentQ>0){currentQ--;renderQuestion()}}
+
+function showResults(){
+  document.getElementById('quiz-area').classList.add('hidden');
+  document.getElementById('nav-btns').classList.add('hidden');
+  document.getElementById('progress-wrap').classList.add('hidden');
+  let score=0;
+  questions.forEach((q,i)=>{if(answers[i]===q[lang].correct)score++});
+  const pct=score/questions.length;
+  let grade,gradeClass,gradeMsg;
+  if(pct>=0.9){grade='A';gradeClass='grade-a';gradeMsg=T[lang].gradeA}
+  else if(pct>=0.7){grade='B';gradeClass='grade-b';gradeMsg=T[lang].gradeB}
+  else if(pct>=0.5){grade='C';gradeClass='grade-c';gradeMsg=T[lang].gradeC}
+  else{grade='F';gradeClass='grade-f';gradeMsg=T[lang].gradeF}
+  const dashOffset=408-(408*pct);
+  const today=new Date().toLocaleDateString(lang==='si'?'si-LK':'en-US',{year:'numeric',month:'long',day:'numeric'});
+  let html=`<div class="results" id="results-card"><div class="score-ring"><svg viewBox="0 0 140 140"><circle class="bg-ring" cx="70" cy="70" r="65"/><circle class="fg-ring" id="score-ring" cx="70" cy="70" r="65" style="stroke-dashoffset:408"/></svg><div class="score-text"><span class="score-num">${score}/10</span><span class="score-label">${T[lang].scoreOf}</span></div></div><h2>${T[lang].resultTitle}</h2><div class="grade ${gradeClass}">${T[lang].yourGrade}: ${grade}</div><p>${gradeMsg}</p>`;
+  if(pct<0.7){
+    html+=`<div class="suggest-box"><h4>🎓 ${T[lang].suggestTitle}</h4><div class="course-item"><div class="course-title">Cybersecurity Awareness Essentials</div><div class="course-provider">IBM SkillsBuild — Free</div><a href="https://skillsbuild.org/students/course-catalog/cybersecurity" target="_blank">→ skillsbuild.org</a></div><div class="course-item"><div class="course-title">Introduction to Cybersecurity</div><div class="course-provider">Cisco Networking Academy — Free</div><a href="https://www.netacad.com/courses/cybersecurity/introduction-cybersecurity" target="_blank">→ netacad.com</a></div><div class="course-item"><div class="course-title">Cyber Security Basics</div><div class="course-provider">SANS Cyber Aces — Free</div><a href="https://www.cyberaces.org/" target="_blank">→ cyberaces.org</a></div><div class="course-item"><div class="course-title">Phishing Awareness Training</div><div class="course-provider">KnowBe4 — Free Module</div><a href="https://www.knowbe4.com/security-awareness-training" target="_blank">→ knowbe4.com</a></div></div>`;
+  }
+  html+=`<div style="margin-top:30px"><input type="text" class="cert-name-input" id="cert-name" placeholder="${T[lang].enterName}" /></div><div class="cert-preview" id="cert-area"><div class="cert-border"><div class="cert-logo">🛡️</div><div class="cert-title">${T[lang].certTitle}</div><div class="cert-sub">${T[lang].certSub}</div><div style="color:#64748b;font-size:.85rem;margin:12px 0">${T[lang].certAwarded}</div><div class="cert-name" id="cert-display-name">—</div><div class="cert-score">${T[lang].certScore}: ${score}/10 (${T[lang].yourGrade}: ${grade})</div><div style="color:#475569;font-size:.82rem;margin-top:8px">C Four Industries (Pvt) Ltd</div><div class="cert-date">${T[lang].certDate}: ${today}</div><div class="cert-seal">🏅</div></div></div><div class="btn-center" style="flex-wrap:wrap"><button class="btn btn-primary" onclick="downloadCert()">📥 ${T[lang].downloadCert}</button><button class="btn btn-secondary" onclick="printCert()">🖨️ ${T[lang].printCert}</button><button class="btn btn-secondary" onclick="retake()">🔄 ${T[lang].retake}</button></div></div>`;
+  const area=document.getElementById('results-area');
+  area.classList.remove('hidden');
+  area.innerHTML=html;
+  requestAnimationFrame(()=>{
+    document.getElementById('results-card').classList.add('show');
+    setTimeout(()=>{document.getElementById('score-ring').style.strokeDashoffset=dashOffset},300);
+  });
+  document.getElementById('cert-name').addEventListener('input',function(){document.getElementById('cert-display-name').textContent=this.value||'—'});
+}
+
+function downloadCert(){
+  const name=document.getElementById('cert-name').value||'Participant';
+  const score=questions.reduce((s,q,i)=>s+(answers[i]===q[lang].correct?1:0),0);
+  const pct=score/questions.length;
+  let grade;
+  if(pct>=0.9)grade='A';else if(pct>=0.7)grade='B';else if(pct>=0.5)grade='C';else grade='F';
+  const today=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const certHTML=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Certificate - ${name}</title><style>*{margin:0;padding:0;box-sizing:border-box}body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f0f4f8;font-family:'Georgia','Noto Sans Sinhala',serif}.cert{background:#fff;width:800px;padding:60px;border:3px solid #0D7A7A;position:relative}.cert::before,.cert::after{content:'';position:absolute;left:20px;right:20px;height:3px;background:linear-gradient(90deg,#0D7A7A,#0ea5e9,#0D7A7A)}.cert::before{top:20px}.cert::after{bottom:20px}.cert .inner{border:1px solid #e0e0e0;padding:40px;text-align:center}.logo{font-size:48px;margin-bottom:10px}.title{font-size:28px;font-weight:bold;color:#1B2A4A;margin:10px 0 4px}.sub{font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:4px;margin-bottom:30px}.awarded{font-size:14px;color:#64748b;margin-bottom:8px}.name{font-size:32px;font-weight:bold;color:#0D7A7A;font-style:italic;border-bottom:2px solid #0D7A7A;display:inline-block;padding-bottom:4px;margin:8px 0 20px}.score{font-size:14px;color:#475569;margin:10px 0}.company{font-size:13px;color:#475569;margin:8px 0}.date{font-size:12px;color:#94a3b8;margin-top:10px}.seal{font-size:36px;margin-top:20px}@media print{body{background:#fff}.cert{border:3px solid #0D7A7A}}</style></head><body><div class="cert"><div class="inner"><div class="logo">🛡️</div><div class="title">${T[lang].certTitle}</div><div class="sub">${T[lang].certSub}</div><div class="awarded">${T[lang].certAwarded}</div><div class="name">${name}</div><div class="score">${T[lang].certScore}: ${score}/10 (${T[lang].yourGrade}: ${grade})</div><div class="company">C Four Industries (Pvt) Ltd</div><div class="date">${T[lang].certDate}: ${today}</div><div class="seal">🏅</div></div></div></body></html>`;
+  const blob=new Blob([certHTML],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=`CyberSecurity_Certificate_${name.replace(/\s+/g,'_')}.html`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function printCert(){
+  const certEl=document.getElementById('cert-area');
+  const printWin=window.open('','_blank');
+  printWin.document.write(`<html><head><title>Certificate</title><style>body{display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:Georgia,serif;margin:0;padding:20px}.cert{background:#fff;max-width:700px;width:100%;padding:40px;border:3px solid #0D7A7A;text-align:center}.cert-border{border:1px solid #e0e0e0;padding:30px 20px}</style></head><body><div class="cert"><div class="cert-border">${certEl.querySelector('.cert-border').innerHTML}</div></div><script>window.print();window.close()<\/script></body></html>`);
+}
+
+function retake(){
+  currentQ=0;
+  answers=new Array(questions.length).fill(null);
+  answered=new Array(questions.length).fill(false);
+  document.getElementById('results-area').classList.add('hidden');
+  document.getElementById('results-area').innerHTML='';
+  document.getElementById('quiz-area').classList.remove('hidden');
+  document.getElementById('nav-btns').classList.remove('hidden');
+  document.getElementById('progress-wrap').classList.add('show');
+  document.getElementById('welcome-screen').classList.add('hidden');
+  renderQuestion();
+}
+</script>
+</body>
 </html>
